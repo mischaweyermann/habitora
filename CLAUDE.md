@@ -31,4 +31,4 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
 - Keine Zugangsdaten, Passwörter oder persönlichen Daten von Kundinnen und Kunden ins Repository schreiben.
 - Rechtliche Texte (Impressum, Datenschutz, AGB) nicht frei erfinden. Nur ändern, was die Mutter oder Mischa vorgibt, und auf Lücken hinweisen.
 - Die Seite muss auf dem Handy funktionieren. Bei grösseren Layout-Änderungen die mobile Ansicht mitdenken.
-- Testphase: `robots.txt` sperrt Suchmaschinen, und die Seiten haben `noindex`. Das erst beim Livegang auf Mischas Anweisung entfernen, dann auch den Testbalken (`.testbar`) löschen.
+- Testphase: `robots.txt` sperrt Suchmaschinen, und die Seiten haben `noindex`. Das erst beim Livegang auf Mischas Anweisung entfernen. (Der Testbalken oben ist bereits entfernt.)

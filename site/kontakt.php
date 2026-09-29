@@ -60,6 +60,7 @@ $email     = einzeilig(feld('email', 160));
 $telefon   = einzeilig(feld('telefon', 40));
 $leistung  = einzeilig(feld('dienstleistung', 80));
 $nachricht = feld('nachricht', 5000);
+$fragebogen = feld('fragebogen', 1000);
 
 if ($name === '' || $nachricht === '') {
     antwort(false, 'Bitte füllen Sie Name und Nachricht aus.');
@@ -83,9 +84,14 @@ $zeilen = [
     'Nachricht:',
     $nachricht,
     '',
-    '—',
-    'Gesendet am ' . date('d.m.Y \u\m H:i') . ' Uhr',
 ];
+if ($fragebogen !== '') {
+    $zeilen[] = 'Antworten aus dem Angebotsfinder:';
+    $zeilen[] = $fragebogen;
+    $zeilen[] = '';
+}
+$zeilen[] = '—';
+$zeilen[] = 'Gesendet am ' . date('d.m.Y \u\m H:i') . ' Uhr';
 $text = implode("\r\n", $zeilen);
 
 $betreff = $BETREFF . ($leistung !== '' ? ' – ' . $leistung : '');
