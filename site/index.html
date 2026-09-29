@@ -11,11 +11,11 @@
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/img/wohnen.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="/assets/css/style.css">
+<script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-
-<div class="testbar">Testseite – alle Inhalte sind Platzhalter</div>
 
 <header class="header">
   <div class="wrap">
@@ -24,6 +24,7 @@
     </a>
     <nav class="nav" aria-label="Hauptnavigation">
       <a href="/#angebot">Angebot</a>
+      <a href="/#finder">Angebot finden</a>
       <a href="/#ablauf">Ablauf</a>
       <a class="btn" href="/#kontakt">Kontakt</a>
     </nav>
@@ -32,35 +33,20 @@
 
 <main>
   <section class="hero">
-    <div class="wrap">
-      <span class="label">Wohnen · Einrichten · Umgestalten</span>
-      <h1>Räume, die zu dir <span>passen.</span></h1>
-      <div class="hero-row">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <span class="label">Wohnen · Einrichten · Umgestalten</span>
+        <h1>Räume, die zu dir <span>passen.</span></h1>
         <p class="lead">Platzhaltertext: Habitora begleitet Menschen dabei, ihr Zuhause so zu gestalten, dass es sich nach ihnen anfühlt. Von der ersten Skizze bis zum letzten Bild an der Wand.</p>
         <div class="hero-actions">
-          <a class="btn" href="#kontakt">Erstgespräch anfragen</a>
+          <a class="btn" href="#finder">Passendes Angebot finden</a>
           <a class="btn secondary" href="#angebot">Angebot ansehen</a>
         </div>
+        <p class="hero-note small">4 kurze Fragen · dauert etwa 1 Minute</p>
       </div>
-
-      <div class="plan" aria-hidden="true">
-        <svg viewBox="0 0 1100 360" preserveAspectRatio="xMidYMid slice">
-          <rect class="room" x="40" y="40" width="420" height="280"/>
-          <rect class="room-accent" x="460" y="40" width="260" height="170"/>
-          <rect class="room" x="460" y="210" width="260" height="110"/>
-          <rect class="room-clay" x="720" y="40" width="160" height="110"/>
-          <rect class="room" x="720" y="150" width="340" height="170"/>
-          <rect class="room-mist" x="880" y="40" width="180" height="110"/>
-          <path class="wall" d="M40 40h1020v280H40zM460 40v120M460 200v120M720 40v280M460 210h260M720 150h110M870 150h190M880 40v110"/>
-          <path class="thin" d="M470 200a40 40 0 0 1 40-40M730 150a40 40 0 0 1 40 40"/>
-          <text x="60" y="300">Wohnen · 28.4 m²</text>
-          <text class="on-color" x="478" y="192">Arbeiten · 11.2 m²</text>
-          <text x="478" y="300">Bad · 6.1 m²</text>
-          <text class="on-color" x="736" y="130">Eingang</text>
-          <text x="740" y="300">Schlafen · 16.8 m²</text>
-          <text x="896" y="130">Küche · 9.5 m²</text>
-        </svg>
-      </div>
+      <figure class="hero-img">
+        <img src="/assets/img/wohnen.webp" width="1920" height="1280" alt="Heller Wohnraum mit grünem Sofa, Sessel und Eichenparkett, dahinter eine offene Treppe">
+      </figure>
     </div>
   </section>
 
@@ -90,6 +76,106 @@
           <p>Von der Planung bis zur Umsetzung: Einkaufsbegleitung, Handwerker-Koordination, Einrichtung.</p>
         </article>
       </div>
+      <p class="cards-cta">Nicht sicher, was passt? <a class="btn ghost" href="#finder">Zum Angebotsfinder</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="einblicke">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">Einblicke</span>
+          <h2>Ruhig, hell und durchdacht</h2>
+        </div>
+        <p>Platzhalter: Hier kann später stehen, was die Räume auf den Bildern besonders macht.</p>
+      </div>
+      <div class="gallery">
+        <figure class="g-wide">
+          <img src="/assets/img/kueche.webp" width="1920" height="1280" loading="lazy" alt="Weisse Küche mit Holz-Theke, zwei Barhockern und Blick in den Garten">
+          <figcaption>Küche</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/img/bad.webp" width="1920" height="1280" loading="lazy" alt="Gäste-WC in Salbeigrün mit rundem Spiegel und freistehendem Waschtisch">
+          <figcaption>Bad</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="finder">
+    <div class="wrap finder-wrap">
+      <div class="finder-intro">
+        <span class="label">Angebotsfinder</span>
+        <h2>Welches Angebot passt zu dir?</h2>
+        <p>Beantworte vier kurze Fragen. Am Schluss siehst du, welches Angebot am besten passt, und kannst es direkt anfragen.</p>
+      </div>
+
+      <noscript><p class="finder-noscript">Der Angebotsfinder braucht JavaScript. Schreib uns einfach über das <a href="#kontakt">Kontaktformular</a>.</p></noscript>
+
+      <form class="finder" id="finder-form" novalidate>
+        <div class="finder-progress" aria-hidden="true"><span></span></div>
+        <p class="finder-count small" aria-live="polite"></p>
+
+        <fieldset class="finder-step" data-step="1">
+          <legend>Worum geht es?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="umfang" value="raum" required><span><strong>Ein einzelner Raum</strong><small>z. B. Wohnzimmer oder Bad</small></span></label>
+            <label class="choice"><input type="radio" name="umfang" value="mehrere"><span><strong>Mehrere Räume</strong><small>z. B. Wohnen, Essen und Küche</small></span></label>
+            <label class="choice"><input type="radio" name="umfang" value="ganz"><span><strong>Das ganze Zuhause</strong><small>alles aus einem Guss</small></span></label>
+            <label class="choice"><input type="radio" name="umfang" value="umzug"><span><strong>Umzug oder Neubau</strong><small>neue Räume von Anfang an planen</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="2" hidden>
+          <legend>Welche Räume? <small>Mehrere möglich</small></legend>
+          <div class="choices chips">
+            <label class="choice"><input type="checkbox" name="raeume" value="Wohnzimmer"><span><strong>Wohnzimmer</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Küche"><span><strong>Küche</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Essbereich"><span><strong>Essbereich</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Schlafzimmer"><span><strong>Schlafzimmer</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Bad"><span><strong>Bad</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Kinderzimmer"><span><strong>Kinderzimmer</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Arbeitszimmer"><span><strong>Arbeitszimmer</strong></span></label>
+            <label class="choice"><input type="checkbox" name="raeume" value="Eingang"><span><strong>Eingang</strong></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="3" hidden>
+          <legend>Was wünschst du dir?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="hilfe" value="ideen"><span><strong>Ideen und eine ehrliche Einschätzung</strong><small>den Rest mache ich selbst</small></span></label>
+            <label class="choice"><input type="radio" name="hilfe" value="konzept"><span><strong>Ein fertiges Konzept</strong><small>mit Farben, Möbeln und Einkaufsliste</small></span></label>
+            <label class="choice"><input type="radio" name="hilfe" value="begleitung"><span><strong>Begleitung bis alles fertig ist</strong><small>inkl. Einkauf und Handwerker</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="finder-step" data-step="4" hidden>
+          <legend>Wann soll es losgehen?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="zeit" value="So bald wie möglich"><span><strong>So bald wie möglich</strong></span></label>
+            <label class="choice"><input type="radio" name="zeit" value="In 1–3 Monaten"><span><strong>In 1–3 Monaten</strong></span></label>
+            <label class="choice"><input type="radio" name="zeit" value="Später"><span><strong>Später</strong></span></label>
+            <label class="choice"><input type="radio" name="zeit" value="Weiss ich noch nicht"><span><strong>Weiss ich noch nicht</strong></span></label>
+          </div>
+        </fieldset>
+
+        <div class="finder-result" data-step="5" hidden tabindex="-1">
+          <span class="label">Unsere Empfehlung</span>
+          <h3 class="result-title"></h3>
+          <p class="result-text"></p>
+          <ul class="result-summary small"></ul>
+          <div class="finder-nav">
+            <a class="btn accent" href="#kontakt" data-finder-request>Dieses Angebot anfragen</a>
+            <button class="btn ghost" type="button" data-finder-restart>Nochmals starten</button>
+          </div>
+        </div>
+
+        <p class="finder-error small" role="alert"></p>
+        <div class="finder-nav" data-finder-controls>
+          <button class="btn secondary" type="button" data-finder-back>Zurück</button>
+          <button class="btn" type="button" data-finder-next>Weiter</button>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -118,11 +204,18 @@
         <p>Platzhalter-Kontaktdaten:<br>info@habitora.ch<br>079 000 00 00</p>
       </div>
       <form class="form" id="kontaktformular" action="/kontakt.php" method="post">
+        <div class="form-choice" hidden>
+          <span class="small">Deine Auswahl aus dem Angebotsfinder</span>
+          <strong></strong>
+        </div>
         <div class="row">
           <div><label for="f-name">Name</label><input id="f-name" name="name" required maxlength="120" autocomplete="name"></div>
           <div><label for="f-mail">E-Mail</label><input id="f-mail" name="email" type="email" required maxlength="160" autocomplete="email"></div>
         </div>
+        <div><label for="f-tel">Telefon <span class="optional">(freiwillig)</span></label><input id="f-tel" name="telefon" type="tel" maxlength="40" autocomplete="tel"></div>
         <div><label for="f-msg">Nachricht</label><textarea id="f-msg" name="nachricht" required maxlength="5000"></textarea></div>
+        <input type="hidden" name="dienstleistung" value="">
+        <input type="hidden" name="fragebogen" value="">
         <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
         <input type="hidden" name="t" value="">
         <button class="btn" type="submit">Nachricht senden</button>
