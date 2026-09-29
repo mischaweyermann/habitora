@@ -12,6 +12,8 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
   - `site/404.html` – Fehlerseite
   - `site/assets/css/style.css` – Gestaltung. Farben und Schriften stehen oben in `:root`.
   - `site/assets/img/` – Bilder. Neue Bilder hier ablegen, möglichst als .jpg oder .webp, nicht breiter als 2000 px.
+    Logos: `logo.svg` (auf hellem Grund), `logo-hell.svg` (auf dunklem Grund), `logo-zeichen.svg` (nur das Zeichen). Nicht verändern oder nachzeichnen.
+  - Branding (Figma „Habitora“, Brand Guidelines v1.0): Farben Sage `#254032`, Linen `#F9F6F0`, Clay `#803E4C`, Midnight `#1E221F`, Mist `#D5DCD7`; Schriften Outfit (Titel) und Geist (Text). Neue Gestaltung nur mit diesen Farben und Schriften.
   - `site/kontakt.php` – verschickt das Kontaktformular. Empfänger steht oben in `$EMPFAENGER`.
   - `site/.htaccess`, `site/robots.txt` – Servereinstellungen. Nur ändern, wenn Mischa es ausdrücklich will.
 - `.github/workflows/deploy.yml` – lädt `site/` automatisch auf den Server hoch. Nicht ändern.
