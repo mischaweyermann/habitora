@@ -3,31 +3,145 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Habitora</title>
+<title>Habitora – Räume, die zu dir passen</title>
+<meta name="description" content="Habitora – Testseite. Inhalte folgen.">
 <!-- Testphase: nicht in Google aufnehmen. Beim Livegang entfernen. -->
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#1b231d">
+<meta name="theme-color" content="#f9f6f0">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-<style>
-  @font-face {
-    font-family: "Bricolage Grotesque";
-    src: url("/assets/fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2");
-    font-weight: 200 800;
-    font-display: swap;
-  }
-  html, body { height: 100%; margin: 0; }
-  body {
-    display: grid; place-items: center;
-    background: #1b231d; color: #eceee6;
-    font-family: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
-  }
-  h1 {
-    margin: 0; font-size: min(42vw, 70vh); font-weight: 800; line-height: 1;
-    letter-spacing: -0.04em;
-  }
-</style>
+<link rel="preload" href="/assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-  <h1>HH</h1>
+
+<div class="testbar">Testseite – alle Inhalte sind Platzhalter</div>
+
+<header class="header">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Habitora – Startseite">
+      <img src="/assets/img/logo.svg" alt="Habitora" width="151" height="30">
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="/#angebot">Angebot</a>
+      <a href="/#ablauf">Ablauf</a>
+      <a class="btn" href="/#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="label">Wohnen · Einrichten · Umgestalten</span>
+      <h1>Räume, die zu dir <span>passen.</span></h1>
+      <div class="hero-row">
+        <p class="lead">Platzhaltertext: Habitora begleitet Menschen dabei, ihr Zuhause so zu gestalten, dass es sich nach ihnen anfühlt. Von der ersten Skizze bis zum letzten Bild an der Wand.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#kontakt">Erstgespräch anfragen</a>
+          <a class="btn secondary" href="#angebot">Angebot ansehen</a>
+        </div>
+      </div>
+
+      <div class="plan" aria-hidden="true">
+        <svg viewBox="0 0 1100 360" preserveAspectRatio="xMidYMid slice">
+          <rect class="room" x="40" y="40" width="420" height="280"/>
+          <rect class="room-accent" x="460" y="40" width="260" height="170"/>
+          <rect class="room" x="460" y="210" width="260" height="110"/>
+          <rect class="room-clay" x="720" y="40" width="160" height="110"/>
+          <rect class="room" x="720" y="150" width="340" height="170"/>
+          <rect class="room-mist" x="880" y="40" width="180" height="110"/>
+          <path class="wall" d="M40 40h1020v280H40zM460 40v120M460 200v120M720 40v280M460 210h260M720 150h110M870 150h190M880 40v110"/>
+          <path class="thin" d="M470 200a40 40 0 0 1 40-40M730 150a40 40 0 0 1 40 40"/>
+          <text x="60" y="300">Wohnen · 28.4 m²</text>
+          <text class="on-color" x="478" y="192">Arbeiten · 11.2 m²</text>
+          <text x="478" y="300">Bad · 6.1 m²</text>
+          <text class="on-color" x="736" y="130">Eingang</text>
+          <text x="740" y="300">Schlafen · 16.8 m²</text>
+          <text x="896" y="130">Küche · 9.5 m²</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="angebot">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">Angebot</span>
+          <h2>Drei Wege zum neuen Raum</h2>
+        </div>
+        <p>Platzhalter: Hier stehen später die echten Angebote mit Preisen und Details.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="area">1 <small>Raum</small></div>
+          <h3>Raum-Check</h3>
+          <p>Ein Besuch vor Ort, eine ehrliche Einschätzung und drei konkrete Ideen, die sofort umsetzbar sind.</p>
+        </article>
+        <article class="card">
+          <div class="area">3–5 <small>Räume</small></div>
+          <h3>Wohnkonzept</h3>
+          <p>Farben, Licht, Möbel und Materialien als durchdachtes Gesamtkonzept mit Einkaufsliste.</p>
+        </article>
+        <article class="card">
+          <div class="area">∞ <small>Ganzes Zuhause</small></div>
+          <h3>Begleitung</h3>
+          <p>Von der Planung bis zur Umsetzung: Einkaufsbegleitung, Handwerker-Koordination, Einrichtung.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ablauf">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="label">Ablauf</span>
+          <h2>So arbeiten wir zusammen</h2>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><h3>Kennenlernen</h3><p>Kostenloses Gespräch, per Telefon oder vor Ort.</p></li>
+        <li><h3>Aufnehmen</h3><p>Masse, Licht, Gewohnheiten: was der Raum heute kann.</p></li>
+        <li><h3>Entwerfen</h3><p>Konzept mit Moodboard, Grundriss und Materialien.</p></li>
+        <li><h3>Umsetzen</h3><p>Selbst oder mit Begleitung, ganz nach Wunsch.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section contact" id="kontakt">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="label">Kontakt</span>
+        <h2>Lass uns über deinen Raum reden.</h2>
+        <p>Platzhalter-Kontaktdaten:<br>info@habitora.ch<br>079 000 00 00</p>
+      </div>
+      <form class="form" id="kontaktformular" action="/kontakt.php" method="post">
+        <div class="row">
+          <div><label for="f-name">Name</label><input id="f-name" name="name" required maxlength="120" autocomplete="name"></div>
+          <div><label for="f-mail">E-Mail</label><input id="f-mail" name="email" type="email" required maxlength="160" autocomplete="email"></div>
+        </div>
+        <div><label for="f-msg">Nachricht</label><textarea id="f-msg" name="nachricht" required maxlength="5000"></textarea></div>
+        <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
+        <input type="hidden" name="t" value="">
+        <button class="btn" type="submit">Nachricht senden</button>
+        <p class="status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <img src="/assets/img/logo-hell.svg" alt="Habitora" width="151" height="30">
+    <nav aria-label="Fussnavigation">
+      <span>© <span data-year>2026</span> Habitora</span>
+      <a href="/impressum/">Impressum</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js" defer></script>
 </body>
 </html>
