@@ -1,0 +1,62 @@
+# Lädt den Ordner site/ bei jeder Änderung auf main automatisch per FTP zu Metanet (Plesk) hoch.
+#
+# Einmalig in GitHub eintragen (Settings → Secrets and variables → Actions):
+#   Secrets:   FTP_SERVER    z. B. dali.sui-inter.net
+#              FTP_USERNAME  FTP-Benutzer aus Plesk
+#              FTP_PASSWORD  Passwort dieses FTP-Benutzers
+#   Variable (optional):
+#              FTP_DIR       Zielordner auf dem Server, Standard: /httpdocs/
+#                            (./ wenn der FTP-Benutzer direkt in httpdocs landet)
+
+name: Auf Metanet hochladen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-metanet
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Upload site/ per FTP
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Code holen
+        uses: actions/checkout@v4
+
+      - name: Prüfen, ob die Zugangsdaten eingetragen sind
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=""
+          [ -z "$FTP_SERVER" ] && missing="$missing FTP_SERVER"
+          [ -z "$FTP_USERNAME" ] && missing="$missing FTP_USERNAME"
+          [ -z "$FTP_PASSWORD" ] && missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Fehlende Secrets:$missing – bitte unter Settings → Secrets and variables → Actions eintragen."
+            exit 1
+          fi
+
+      - name: PHP-Dateien auf Syntaxfehler prüfen
+        run: |
+          find site -name '*.php' -print0 | xargs -0 -r -n1 php -l
+
+      - name: Hochladen
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          security: loose
+          local-dir: ./site/
+          server-dir: ${{ vars.FTP_DIR || '/httpdocs/' }}

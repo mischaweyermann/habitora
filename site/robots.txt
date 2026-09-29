@@ -1,0 +1,5 @@
+# Testphase: Suchmaschinen aussperren. Beim Livegang ersetzen durch:
+# User-agent: *
+# Allow: /
+User-agent: *
+Disallow: /

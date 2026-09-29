@@ -1,0 +1,32 @@
+# Habitora – Hinweise für Claude
+
+Dies ist die Website **habitora.ch**. Sie ist eine einfache statische Seite (HTML, CSS, etwas JavaScript und ein PHP-Kontaktformular), ohne Build-Schritt und ohne CMS.
+
+Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter, die Inhalte über Claude ändert. Sie ist keine Programmiererin: Antworte ihr auf Deutsch, in einfachen Worten, ohne Fachbegriffe wie „Commit“, „Branch“ oder „Deploy“. Sag ihr, was sich auf der Website ändert, nicht welche Datei du bearbeitest.
+
+## Wo was liegt
+
+- `site/` – alles, was online geht. **Nur hier Inhalte ändern.**
+  - `site/index.html` – Startseite (Texte, Angebot, Ablauf, Kontakt)
+  - `site/impressum/index.html` – Impressum
+  - `site/404.html` – Fehlerseite
+  - `site/assets/css/style.css` – Gestaltung. Farben und Schriften stehen oben in `:root`.
+  - `site/assets/img/` – Bilder. Neue Bilder hier ablegen, möglichst als .jpg oder .webp, nicht breiter als 2000 px.
+  - `site/kontakt.php` – verschickt das Kontaktformular. Empfänger steht oben in `$EMPFAENGER`.
+  - `site/.htaccess`, `site/robots.txt` – Servereinstellungen. Nur ändern, wenn Mischa es ausdrücklich will.
+- `.github/workflows/deploy.yml` – lädt `site/` automatisch auf den Server hoch. Nicht ändern.
+
+## So wird eine Änderung veröffentlicht
+
+1. Änderung in `site/` machen.
+2. Kopf- und Fussbereich (Header, Navigation, Footer) sind in jeder HTML-Datei einzeln vorhanden. Wenn du dort etwas änderst, ändere es in **allen** HTML-Dateien gleich.
+3. Neuen Branch anlegen, committen und einen Pull Request gegen `main` öffnen. Mischa prüft und gibt frei; erst dann geht die Änderung online (ca. 1–2 Minuten nach dem Merge).
+4. Der Mutter kurz sagen, was geändert wurde und dass Mischa es noch freigeben muss.
+
+## Regeln
+
+- Keine externen Dienste einbinden (Google Fonts, Analytics, Tracking, fremde Skripte), ohne dass Mischa zustimmt. Schriften liegen lokal in `site/assets/fonts/`.
+- Keine Zugangsdaten, Passwörter oder persönlichen Daten von Kundinnen und Kunden ins Repository schreiben.
+- Rechtliche Texte (Impressum, Datenschutz, AGB) nicht frei erfinden. Nur ändern, was die Mutter oder Mischa vorgibt, und auf Lücken hinweisen.
+- Die Seite muss auf dem Handy funktionieren. Bei grösseren Layout-Änderungen die mobile Ansicht mitdenken.
+- Testphase: `robots.txt` sperrt Suchmaschinen, und die Seiten haben `noindex`. Das erst beim Livegang auf Mischas Anweisung entfernen, dann auch den Testbalken (`.testbar`) löschen.
