@@ -34,11 +34,17 @@
 
 <main>
   <section class="hero">
-    <div class="hero-media" aria-hidden="true">
+    <div class="hero-media">
       <img class="hero-foto" src="/assets/img/wohnen.webp" width="1920" height="1280" alt="">
       <img class="hero-skizze" src="/assets/img/wohnen-skizze.webp" width="1920" height="1280" alt="">
-      <span class="hero-tag tag-idee">Die Idee</span>
-      <span class="hero-tag tag-ergebnis">Das Ergebnis</span>
+      <span class="hero-tag tag-idee" aria-hidden="true">Die Idee</span>
+      <span class="hero-tag tag-ergebnis" aria-hidden="true">Das Ergebnis</span>
+      <div class="hero-handle" role="slider" tabindex="0" aria-label="Zwischen Skizze und Foto hin und her schieben"
+           aria-valuemin="5" aria-valuemax="95" aria-valuenow="54" aria-valuetext="54 Prozent Skizze" aria-orientation="horizontal">
+        <span class="hero-knob" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
     </div>
     <div class="wrap">
       <div class="hero-text">
