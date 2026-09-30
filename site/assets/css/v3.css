@@ -224,7 +224,6 @@
   .v3-preview { display: none !important; }
   .v3-zoom { display: none !important; }
 }
-}
 
 /* ---- Inhalte unter dem Rundgang ----------------------------------------- */
 .v3-section { padding: 0 0 clamp(56px, 8vw, 104px); }
