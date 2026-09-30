@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="/assets/css/v3.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
-<body class="v3">
+<body class="v3" id="top">
 
 <!-- Variante 3 (Designtest): Raum-Rundgang. Kopf- und Fussbereich weichen bewusst von den anderen Seiten ab. -->
 <main>
@@ -267,6 +267,16 @@
     </nav>
   </div>
 </footer>
+
+<!-- Navigation unten (nur Handy) -->
+<nav class="bnav" aria-label="Schnellnavigation">
+  <div class="bnav-bar">
+    <a class="bnav-item" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.2L12 4l8 6.2V19a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 014 19z"/><path d="M12 15.5v2"/></svg><span>Start</span></a>
+    <a class="bnav-item" href="#angebot"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span>Angebot</span></a>
+    <a class="bnav-item" href="#finder"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><span>Finden</span></a>
+    <a class="bnav-item" href="#kontakt"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4.5 7.5l7.5 5.5 7.5-5.5"/></svg><span>Kontakt</span></a>
+  </div>
+</nav>
 
 <script src="/assets/js/main.js" defer></script>
 </body>

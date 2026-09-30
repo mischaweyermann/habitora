@@ -2,6 +2,39 @@
   "use strict";
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
+  /* ---- Navigation unten (Handy): aktiven Bereich markieren ------------- */
+  var bnav = document.querySelector(".bnav");
+  if (bnav) {
+    var punkte = Array.prototype.map.call(bnav.querySelectorAll(".bnav-item"), function (a) {
+      var h = a.getAttribute("href");
+      var id = h.charAt(0) === "#" ? h.slice(1) : "";
+      return { a: a, ziel: id === "top" ? document.body : (id ? document.getElementById(id) : null) };
+    }).filter(function (p) { return p.ziel; });
+    var markiere = function (p) {
+      punkte.forEach(function (q) {
+        var an = q === p;
+        q.a.classList.toggle("is-aktiv", an);
+        if (an) q.a.setAttribute("aria-current", "location"); else q.a.removeAttribute("aria-current");
+      });
+    };
+    var geplant = false;
+    var pruefe = function () {
+      geplant = false;
+      var linie = window.innerHeight * 0.4, aktiv = punkte[0];
+      punkte.forEach(function (p) {
+        if (p.ziel !== document.body && p.ziel.getBoundingClientRect().top <= linie) aktiv = p;
+      });
+      // ganz unten angekommen: letzter Punkt
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) aktiv = punkte[punkte.length - 1];
+      markiere(aktiv);
+    };
+    if (punkte.length) {
+      window.addEventListener("scroll", function () { if (!geplant) { geplant = true; requestAnimationFrame(pruefe); } }, { passive: true });
+      window.addEventListener("resize", pruefe);
+      pruefe();
+    }
+  }
+
   /* ---- Hero: Schieberegler zwischen Skizze und Foto ---------------------- */
   var hero = document.querySelector(".hero");
   var griff = hero && hero.querySelector(".hero-handle");

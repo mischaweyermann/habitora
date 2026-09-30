@@ -188,3 +188,9 @@
 .v2-footer img { width: 104px; }
 .v2-footer nav { display: flex; gap: 20px; }
 .v2-footer a { text-decoration: none; } .v2-footer a:hover { color: var(--midnight); }
+
+/* Navigation unten: wie Vorlage – weiss auf hellem Rahmen, aktiv Midnight */
+@media (max-width: 760px) {
+  .v2 .bnav { --bnav-aktiv: var(--midnight); --bnav-ink: var(--midnight); background: rgba(241, 237, 229, .75); border-radius: 28px; }
+  .v2 .bnav-bar { border-radius: 20px; box-shadow: none; }
+}

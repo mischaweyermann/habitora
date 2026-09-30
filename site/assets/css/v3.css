@@ -257,3 +257,14 @@
   .hs-dot::after { animation: none; }
   .v3-scene, .v3-cover, .v3-preview { transition: none; }
 }
+
+/* Navigation unten: Glas-Rahmen wie im Rundgang, aktiv Midnight */
+@media (max-width: 760px) {
+  .v3 .bnav {
+    --bnav-aktiv: var(--midnight); --bnav-ink: var(--midnight);
+    border-radius: 30px; background: rgba(30, 34, 31, .28); border: 1px solid rgba(255,255,255,.25);
+  }
+  .v3 .bnav-bar { border-radius: 22px; background: rgba(249, 246, 240, .96); }
+  /* Rundgang endet über der Navigation */
+  .v3-hero { height: calc(100svh - 16px - 88px - env(safe-area-inset-bottom)); min-height: 560px; }
+}

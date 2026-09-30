@@ -23,7 +23,7 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
 ## So wird eine Änderung veröffentlicht
 
 1. Änderung in `site/` machen.
-2. Kopf- und Fussbereich (Header, Navigation, Footer) sind in jeder HTML-Datei einzeln vorhanden. Wenn du dort etwas änderst, ändere es in **allen** HTML-Dateien gleich.
+2. Kopf- und Fussbereich (Header, Navigation, Footer, Handy-Navigation unten `.bnav`) sind in jeder HTML-Datei einzeln vorhanden. Wenn du dort etwas änderst, ändere es in **allen** HTML-Dateien gleich.
 3. Neuen Branch anlegen, committen und einen Pull Request gegen `main` öffnen. Mischa prüft und gibt frei; erst dann geht die Änderung online (ca. 1–2 Minuten nach dem Merge).
 4. Der Mutter kurz sagen, was geändert wurde und dass Mischa es noch freigeben muss.
 
