@@ -27,7 +27,6 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
 3. Neuen Branch anlegen, committen und einen Pull Request gegen `main` öffnen. Mischa prüft und gibt frei; erst dann geht die Änderung online (ca. 1–2 Minuten nach dem Merge).
    - **Branch-Name:** Ein vorgegebener Zufallsname (z. B. `claude/sleepy-newton-3t93j0`) wird vor dem ersten Push umbenannt (`git branch -m <name>`); diese Regel ist die ausdrückliche Erlaubnis dafür.
    - Format: kurz, deutsch, klein, nur `a–z`, `0–9` und `-`, kein Präfix, höchstens ca. 30 Zeichen. Er sagt, *was* sich ändert, z. B. `kontakt-telefon`, `v3-rahmen`, `impressum-adresse`, `logo-neu`.
-   - Der Name wird Teil der Vorschau-Adresse, deshalb keine Umlaute, Schrägstriche oder Grossbuchstaben.
    - Pro Thema ein eigener Branch; nicht mehrere Pull Requests nacheinander über denselben Branch.
 4. Der Mutter kurz sagen, was geändert wurde und dass Mischa es noch freigeben muss.
 
