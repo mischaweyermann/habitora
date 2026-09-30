@@ -154,9 +154,6 @@
       if (Math.abs(dx) > 50 && !e.target.closest(".v3-tabs, a, button")) geheZu(index + (dx < 0 ? 1 : -1));
     }, { passive: true });
 
-    // Hinweis-Schilder: auf dem Handy nur Punkte, Schild erscheint beim Antippen
-    tour.querySelectorAll(".hs").forEach(function (hs) { hs.tabIndex = 0; });
-
     window.addEventListener("resize", function () { zeigeVorschau(rtabs[index]); });
     geheZu(0);
   }
