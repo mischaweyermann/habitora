@@ -9,6 +9,7 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
 - `site/` – alles, was online geht. **Nur hier Inhalte ändern.**
   - `site/index.html` – Startseite (Texte, Angebot, Ablauf, Kontakt)
   - `site/v2/index.html` – Designvariante 2 der Startseite (habitora.ch/v2), eigener Stil in `site/assets/css/v2.css`. Kopf- und Fussbereich weichen hier bewusst ab. Texte bei Änderungen an der Startseite hier ebenfalls nachführen, solange beide Varianten bestehen.
+  - `site/v3/index.html` – Designvariante 3 (habitora.ch/v3): Raum-Rundgang mit Hinweis-Schildern im Bild, Stil in `site/assets/css/v3.css`. Gleiche Regel wie bei v2.
   - `site/impressum/index.html` – Impressum
   - `site/404.html` – Fehlerseite
   - `site/assets/css/style.css` – Gestaltung. Farben und Schriften stehen oben in `:root`.

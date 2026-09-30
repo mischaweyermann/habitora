@@ -55,6 +55,76 @@
     });
   }
 
+  /* ---- v3: Raum-Rundgang ------------------------------------------------- */
+  var tour = document.querySelector(".v3-hero");
+  if (tour) {
+    var rtabs = Array.prototype.slice.call(tour.querySelectorAll(".v3-tab"));
+    var dock = tour.querySelector(".v3-dock");
+    var vorschau = tour.querySelector(".v3-preview");
+    var vImg = vorschau.querySelector("img");
+    var vName = vorschau.querySelector("b");
+    var prevName = tour.querySelector(".v3-prev .v3-side-name");
+    var nextName = tour.querySelector(".v3-next .v3-side-name");
+    var index = 0;
+
+    var zeigeVorschau = function (tab) {
+      var d = dock.getBoundingClientRect(), t = tab.getBoundingClientRect();
+      vorschau.style.setProperty("--px", (t.left + t.width / 2 - d.left) + "px");
+      if (vImg.getAttribute("src") !== tab.dataset.bild) vImg.setAttribute("src", tab.dataset.bild);
+      vName.textContent = tab.dataset.name;
+    };
+    var geheZu = function (i, fokus) {
+      index = (i + rtabs.length) % rtabs.length;
+      rtabs.forEach(function (t, n) {
+        var an = n === index;
+        t.setAttribute("aria-selected", an ? "true" : "false");
+        t.tabIndex = an ? 0 : -1;
+        var szene = document.getElementById(t.getAttribute("aria-controls"));
+        szene.classList.toggle("is-aktiv", an);
+        if (an) szene.removeAttribute("aria-hidden"); else szene.setAttribute("aria-hidden", "true");
+      });
+      prevName.textContent = rtabs[(index - 1 + rtabs.length) % rtabs.length].dataset.name;
+      nextName.textContent = rtabs[(index + 1) % rtabs.length].dataset.name;
+      zeigeVorschau(rtabs[index]);
+      if (fokus) rtabs[index].focus();
+    };
+
+    rtabs.forEach(function (tab, n) {
+      tab.addEventListener("click", function () { geheZu(n); });
+      tab.addEventListener("mouseenter", function () { zeigeVorschau(tab); });
+      tab.addEventListener("mouseleave", function () { zeigeVorschau(rtabs[index]); });
+      tab.addEventListener("keydown", function (e) {
+        var z = { ArrowRight: n + 1, ArrowLeft: n - 1, Home: 0, End: rtabs.length - 1 }[e.key];
+        if (z === undefined) return;
+        e.preventDefault();
+        geheZu(z, true);
+      });
+    });
+    tour.querySelectorAll("[data-raum-schritt]").forEach(function (btn) {
+      btn.addEventListener("click", function () { geheZu(index + Number(btn.dataset.raumSchritt)); });
+    });
+    var zoom = tour.querySelector(".v3-zoom");
+    zoom.addEventListener("click", function () {
+      var an = !tour.classList.contains("is-zoom");
+      tour.classList.toggle("is-zoom", an);
+      zoom.setAttribute("aria-pressed", an ? "true" : "false");
+      zoom.setAttribute("aria-label", an ? "Bild verkleinern" : "Bild vergrössern");
+    });
+
+    // Wischen auf dem Handy
+    var startX = null;
+    tour.querySelector(".v3-stage").parentNode.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    tour.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 50 && !e.target.closest(".v3-tabs, a, button")) geheZu(index + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    window.addEventListener("resize", function () { zeigeVorschau(rtabs[index]); });
+    geheZu(0);
+  }
+
   /* ---- Angebotsfinder ---------------------------------------------------- */
   var ANGEBOTE = {
     check: {
@@ -96,6 +166,7 @@
 
   /* ---- Reiter (v2: Angebote) --------------------------------------------- */
   document.querySelectorAll("[role=tablist]").forEach(function (liste) {
+    if (liste.closest(".v3-hero")) return; // Rundgang hat eigene Logik (unten)
     var reiter = Array.prototype.slice.call(liste.querySelectorAll("[role=tab]"));
     var waehle = function (tab, fokus) {
       reiter.forEach(function (t) {
