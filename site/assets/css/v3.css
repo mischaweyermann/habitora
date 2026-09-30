@@ -121,18 +121,19 @@
 .v3-tab[aria-selected="true"] { background: #fff; color: var(--midnight); }
 .v3-tab:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .v3-preview {
-  position: absolute; bottom: calc(100% + 14px); left: var(--px, 50%); transform: translateX(-50%);
+  --steg: 22px; /* Abstand Vorschau–Reiter = Höhe des Stegs */
+  position: absolute; bottom: calc(100% + var(--steg)); left: var(--px, 50%); transform: translateX(-50%);
   width: 164px; padding: 12px 12px 16px; border-radius: 22px; text-align: center;
   background: var(--glass-strong); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   transition: left .35s ease;
 }
-.v3-preview::after { /* kleiner Steg zum Reiter */
-  content: ""; position: absolute; left: 50%; top: 100%; width: 36px; height: 14px; transform: translateX(-50%);
-  background: var(--glass-strong);
-  -webkit-mask: radial-gradient(circle at 0 100%, transparent 10px, #000 10.5px) left / 50% 100% no-repeat,
-                radial-gradient(circle at 100% 100%, transparent 10px, #000 10.5px) right / 50% 100% no-repeat;
-          mask: radial-gradient(circle at 0 100%, transparent 10px, #000 10.5px) left / 50% 100% no-repeat,
-                radial-gradient(circle at 100% 100%, transparent 10px, #000 10.5px) right / 50% 100% no-repeat;
+/* Steg zum Reiter: oben und unten volle Breite, Seiten nach innen geschwungen (Sanduhr-Form) */
+.v3-preview::after {
+  content: ""; position: absolute; left: 50%; top: 100%; width: 44px; height: var(--steg); transform: translateX(-50%);
+  background: linear-gradient(var(--glass-strong), #fff);
+  --steg-form: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0H100C78 18 66 34 66 50C66 66 78 82 100 100H0C22 82 34 66 34 50C34 34 22 18 0 0Z'/%3E%3C/svg%3E");
+  -webkit-mask: var(--steg-form) center / 100% 100% no-repeat;
+          mask: var(--steg-form) center / 100% 100% no-repeat;
 }
 .v3-preview img { width: 100%; aspect-ratio: 1.1; object-fit: cover; border-radius: 14px; }
 .v3-preview b { display: block; margin-top: 12px; font: 600 16px/20px var(--display); color: var(--midnight); }
