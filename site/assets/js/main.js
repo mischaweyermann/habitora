@@ -105,7 +105,15 @@
     var nextName = tour.querySelector(".v3-next .v3-side-name");
     var index = 0;
 
+    var vorschauTab = null;
     var zeigeVorschau = function (tab) {
+      // anderer Reiter: Kachel neu aufblasen
+      if (tab !== vorschauTab) {
+        vorschauTab = tab;
+        vorschau.classList.remove("is-pop");
+        void vorschau.offsetWidth; // Animation neu starten
+        vorschau.classList.add("is-pop");
+      }
       var d = dock.getBoundingClientRect(), t = tab.getBoundingClientRect();
       vorschau.style.setProperty("--px", (t.left + t.width / 2 - d.left) + "px");
       if (vImg.getAttribute("src") !== tab.dataset.bild) vImg.setAttribute("src", tab.dataset.bild);
