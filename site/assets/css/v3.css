@@ -1,4 +1,4 @@
-/* Habitora – Variante 3 (/v3/): Raum-Rundgang
+/* Habitora – Startseite (früher Variante 3, /v3/): Raum-Rundgang
    Grosses Foto mit weissem Rahmen, Glas-Elemente, Hinweis-Schilder im Bild.
    Farben und Schrift nach den Instagram-Beiträgen (Figma „Social Media“):
    Flächen in Linen und Sage, Überzeilen in Clay, Titel Outfit Medium, Text Geist.
@@ -351,12 +351,13 @@
   .v3-steps { grid-template-columns: 1fr; gap: 8px; }
   .v3-steps li {
     min-height: 0; padding: 16px 18px; border-radius: 18px;
-    display: grid; grid-template-columns: 2.6rem 1fr; column-gap: 12px; align-items: baseline;
+    display: grid; grid-template-columns: 2.6rem 1fr; column-gap: 12px; align-items: center;
   }
   .v3-steps .v3-kopf { display: none; }
-  .v3-nr { grid-row: 1 / span 2; margin: 0; padding: 0; font-size: 1.9rem; }
-  .v3-steps h3 { font-size: 1.125rem; margin: 0 0 4px; }
-  .v3-steps p { font-size: 14px; }
+  /* Nummer und Titel teilen sich die erste Zeile und stehen auf gleicher Höhe, Text darunter */
+  .v3-nr { grid-row: 1; grid-column: 1; margin: 0; padding: 0; font-size: 1.9rem; line-height: 1; }
+  .v3-steps h3 { grid-row: 1; grid-column: 2; font-size: 1.125rem; line-height: 1.2; margin: 0; }
+  .v3-steps p { grid-row: 2; grid-column: 2; font-size: 14px; margin-top: 4px; }
 }
 
 .v3-contact { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(28px, 5vw, 72px); padding: clamp(24px, 5vw, 64px); }
