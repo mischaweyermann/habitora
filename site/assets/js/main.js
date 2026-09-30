@@ -110,6 +110,7 @@
       vorschau.style.setProperty("--px", (t.left + t.width / 2 - d.left) + "px");
       if (vImg.getAttribute("src") !== tab.dataset.bild) vImg.setAttribute("src", tab.dataset.bild);
       vName.textContent = tab.dataset.name;
+      vorschau.classList.toggle("is-hover", tab !== rtabs[index]);
     };
     var geheZu = function (i, fokus) {
       index = (i + rtabs.length) % rtabs.length;
