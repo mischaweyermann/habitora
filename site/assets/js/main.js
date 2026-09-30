@@ -77,6 +77,46 @@
   var finder = document.getElementById("finder-form");
   var kontakt = document.getElementById("kontaktformular");
 
+  // Gewähltes Angebot ins Kontaktformular übernehmen
+  var VORLAGE = "Hallo, ich interessiere mich für das Angebot «";
+  var waehleAngebot = function (name, fragebogen) {
+    if (!kontakt) return;
+    kontakt.querySelector("[name=dienstleistung]").value = name;
+    kontakt.querySelector("[name=fragebogen]").value = fragebogen || "";
+    var box = kontakt.querySelector(".form-choice");
+    box.querySelector("strong").textContent = name;
+    box.hidden = false;
+    var msg = kontakt.querySelector("[name=nachricht]");
+    if (!msg.value.trim() || msg.value.indexOf(VORLAGE) === 0) msg.value = VORLAGE + name + "».\n\n";
+    setTimeout(function () { kontakt.querySelector("[name=name]").focus({ preventScroll: true }); }, 400);
+  };
+  document.querySelectorAll("[data-anfrage]").forEach(function (el) {
+    el.addEventListener("click", function () { waehleAngebot(el.getAttribute("data-anfrage"), ""); });
+  });
+
+  /* ---- Reiter (v2: Angebote) --------------------------------------------- */
+  document.querySelectorAll("[role=tablist]").forEach(function (liste) {
+    var reiter = Array.prototype.slice.call(liste.querySelectorAll("[role=tab]"));
+    var waehle = function (tab, fokus) {
+      reiter.forEach(function (t) {
+        var an = t === tab;
+        t.setAttribute("aria-selected", an ? "true" : "false");
+        t.tabIndex = an ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !an;
+      });
+      if (fokus) tab.focus();
+    };
+    reiter.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { waehle(tab); });
+      tab.addEventListener("keydown", function (e) {
+        var n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: reiter.length - 1 }[e.key];
+        if (n === undefined) return;
+        e.preventDefault();
+        waehle(reiter[(n + reiter.length) % reiter.length], true);
+      });
+    });
+  });
+
   if (finder) {
     var schritt = 1;
     var steps = finder.querySelectorAll("[data-step]");
@@ -188,16 +228,8 @@
     });
 
     finder.querySelector("[data-finder-request]").addEventListener("click", function () {
-      if (!kontakt || !empfehlung) return;
-      var text = zusammenfassung().map(function (z) { return z[0] + ": " + z[1]; }).join("\n");
-      kontakt.querySelector("[name=dienstleistung]").value = empfehlung.name;
-      kontakt.querySelector("[name=fragebogen]").value = text;
-      var box = kontakt.querySelector(".form-choice");
-      box.querySelector("strong").textContent = empfehlung.name;
-      box.hidden = false;
-      var msg = kontakt.querySelector("[name=nachricht]");
-      if (!msg.value.trim()) msg.value = "Hallo, ich interessiere mich für das Angebot «" + empfehlung.name + "».\n\n";
-      setTimeout(function () { kontakt.querySelector("[name=name]").focus({ preventScroll: true }); }, 400);
+      if (!empfehlung) return;
+      waehleAngebot(empfehlung.name, zusammenfassung().map(function (z) { return z[0] + ": " + z[1]; }).join("\n"));
     });
 
     finder.addEventListener("submit", function (e) { e.preventDefault(); });
