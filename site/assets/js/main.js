@@ -28,6 +28,11 @@
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) aktiv = punkte[punkte.length - 1];
       markiere(aktiv);
     };
+    // erst nach etwas Scrollen einblenden
+    var zeigeBnav = function () { bnav.classList.toggle("is-sichtbar", window.scrollY > 100); };
+    window.addEventListener("scroll", zeigeBnav, { passive: true });
+    zeigeBnav();
+
     if (punkte.length) {
       window.addEventListener("scroll", function () { if (!geplant) { geplant = true; requestAnimationFrame(pruefe); } }, { passive: true });
       window.addEventListener("resize", pruefe);

@@ -186,7 +186,7 @@
   .v3-hero {
     --v3-rand: 20px;
     margin: 0; border-radius: 0; min-height: 560px; max-height: none;
-    height: calc(100svh - 92px - env(safe-area-inset-bottom)); /* endet über der Navigation unten */
+    height: 100svh; /* Navigation unten erscheint erst beim Scrollen */
   }
   .v3-stage::after {
     background: linear-gradient(180deg, rgba(30,34,31,.45) 0%, rgba(30,34,31,0) 22%, rgba(30,34,31,0) 36%, rgba(30,34,31,.55) 62%, rgba(30,34,31,.85) 100%);
@@ -353,8 +353,4 @@
     border-radius: 30px; background: rgba(37, 64, 50, .3); border: 1px solid rgba(255,255,255,.25);
   }
   .v3 .bnav-bar { border-radius: 22px; background: var(--linen); }
-}
-/* Schmale Tablets: Rundgang endet über der Navigation */
-@media (min-width: 701px) and (max-width: 760px) {
-  .v3-hero { height: calc(100svh - 32px - 88px - env(safe-area-inset-bottom)); min-height: 560px; }
 }
