@@ -154,6 +154,12 @@
       if (Math.abs(dx) > 50 && !e.target.closest(".v3-tabs, a, button")) geheZu(index + (dx < 0 ? 1 : -1));
     }, { passive: true });
 
+    // Kopfzeile: beim Scrollen feste helle Leiste
+    var kopf = tour.querySelector(".v3-header");
+    var pruefeKopf = function () { kopf.classList.toggle("is-fest", window.scrollY > 24); };
+    window.addEventListener("scroll", pruefeKopf, { passive: true });
+    pruefeKopf();
+
     window.addEventListener("resize", function () { zeigeVorschau(rtabs[index]); });
     geheZu(0);
   }

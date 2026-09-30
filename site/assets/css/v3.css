@@ -77,12 +77,28 @@
 
 /* Kopfzeile auf dem Bild */
 .v3-header {
-  position: absolute; z-index: 3; top: 0; left: 0; right: 0; height: 84px; padding: 0 var(--v3-rand);
+  --kopf-rand: 16px; /* = Abstand des Rundgangs zum Fensterrand */
+  position: fixed; z-index: 50; top: var(--kopf-rand); left: var(--kopf-rand); right: var(--kopf-rand);
+  height: 84px; padding: 0 var(--v3-rand);
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  transition: top .3s ease, left .3s ease, right .3s ease, height .3s ease, padding .3s ease, background-color .3s ease, box-shadow .3s ease;
 }
+.v3-header .logo { display: block; }
 .v3-header .logo img { width: 124px; }
+.v3-header .logo-primaer { display: none; }
+/* Beim Scrollen: feste helle Leiste, Logo in Sage, Knopf in Sage */
+.v3-header.is-fest {
+  top: 0; left: 0; right: 0; height: 68px; padding: 0 calc(var(--v3-rand) + var(--kopf-rand));
+  background: rgba(249, 246, 240, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--mist);
+}
+.v3-header.is-fest .logo-hell { display: none; }
+.v3-header.is-fest .logo-primaer { display: block; }
+.v3-header.is-fest .v3-nav a:not(.v3-btn) { color: var(--ink-soft); }
+.v3-header.is-fest .v3-nav a:not(.v3-btn):hover { color: var(--sage); }
+.v3-header.is-fest .v3-header-btn { background: var(--sage); color: #fff; }
 .v3-nav { display: flex; align-items: center; gap: 28px; }
-.v3-nav a:not(.v3-btn) { color: rgba(255,255,255,.85); text-decoration: none; font-size: 14px; }
+.v3-nav a:not(.v3-btn) { color: rgba(255,255,255,.85); text-decoration: none; font-size: 14px; transition: color .3s; }
 .v3-nav a:not(.v3-btn):hover { color: #fff; }
 
 /* Weisser Rahmen */
@@ -164,31 +180,50 @@
   .v3-nav a:not(.v3-btn) { display: none; }
   .hs-desk { display: none; }
 }
+/* Handy: Foto randlos über den ganzen Bildschirm, Titel und Knopf unten auf dem Bild,
+   darunter ‹ Raum · Punkte · Raum › zum Blättern. Keine Hinweis-Schilder. */
 @media (max-width: 700px) {
-  .v3-hero { margin: 8px; height: calc(100svh - 16px); min-height: 640px; border-radius: 24px; }
-  .v3-hero { --v3-rand: 18px; }
-  .v3-header { height: 68px; }
+  .v3-hero {
+    --v3-rand: 20px;
+    margin: 0; border-radius: 0; min-height: 560px; max-height: none;
+    height: calc(100svh - 92px - env(safe-area-inset-bottom)); /* endet über der Navigation unten */
+  }
+  .v3-stage::after {
+    background: linear-gradient(180deg, rgba(30,34,31,.45) 0%, rgba(30,34,31,0) 22%, rgba(30,34,31,0) 36%, rgba(30,34,31,.55) 62%, rgba(30,34,31,.85) 100%);
+  }
+  .v3-hotspots { display: none; }
+  .v3-header { --kopf-rand: 0px; height: 68px; }
+  .v3-header.is-fest { height: 60px; }
   .v3-header .logo img { width: 110px; }
-  /* Handy: kein Rahmen, Titel in einer Zeile, Karte fast volle Breite */
-  .v3-frame { inset: 68px var(--v3-rand) 6px; border: 0; border-radius: 0; }
-  .v3-intro { left: 0; right: 0; top: 12px; max-width: none; padding: 18px 16px; border-radius: 22px; }
-  .v3-intro .v3-eyebrow { font-size: 11px; letter-spacing: .12em; }
-  .v3-intro h1 { font-size: clamp(1.25rem, 6.1vw, 1.7rem); line-height: 1.15; margin: 8px 0 14px; letter-spacing: -0.02em; }
-  .v3-side { text-shadow: none; top: auto; bottom: 80px; transform: none; flex-direction: row; padding: 8px; font-size: 13px; }
+  .v3-frame { inset: 0; border: 0; border-radius: 0; }
+  .v3-intro {
+    top: auto; left: 0; right: 0; bottom: 64px; max-width: none; padding: 0 var(--v3-rand);
+    border: 0; border-radius: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .v3-intro .v3-eyebrow { font-size: 11px; letter-spacing: .12em; color: var(--on-dark-soft); }
+  .v3-intro h1 { font-size: clamp(2.2rem, 10.5vw, 2.8rem); line-height: 1.05; margin: 10px 0 18px; }
+  /* Blättern: Pfeile mit Raumname links und rechts, Reiter als Punkte in der Mitte */
+  .v3-side { top: auto; bottom: 10px; transform: none; flex-direction: row; padding: 8px; font-size: 14px; text-shadow: none; }
   .v3-side-name, .v3-next .v3-side-name { writing-mode: horizontal-tb; transform: none; }
-  .v3-prev { left: 4px; } .v3-next { right: 4px; }
-  .v3-dock { bottom: 14px; width: calc(100% - 24px); }
-  .v3-tabs { width: 100%; gap: 6px; justify-content: center; }
-  .v3-tab { padding: 10px 12px; font-size: 13px; flex: 1 1 0; }
+  .v3-prev { left: 12px; } .v3-next { right: 12px; }
+  .v3-dock { bottom: 12px; }
+  .v3-tabs { gap: 8px; align-items: center; }
+  .v3-tab {
+    width: 8px; height: 8px; padding: 0; font-size: 0; border-radius: 999px;
+    background: rgba(255,255,255,.5); backdrop-filter: none; -webkit-backdrop-filter: none;
+    transition: width .25s, background .25s;
+  }
+  .v3-tab::after { content: ""; position: absolute; inset: -12px -4px; } /* grössere Tippfläche */
+  .v3-tab { position: relative; }
+  .v3-tab:hover { background: rgba(255,255,255,.75); }
+  /* aktueller Raum: Punkt wird zum Schild mit Namen */
+  .v3-tab[aria-selected="true"] {
+    width: auto; height: auto; padding: 6px 12px; font: 500 12px/14px var(--body);
+    background: var(--linen); color: var(--sage);
+  }
   .v3-preview { display: none !important; }
   .v3-zoom { display: none !important; }
-  .hs-pill { padding: 6px 14px 6px 6px; gap: 8px; transform: translateX(-26px); }
-  .hs-ic { width: 32px; height: 32px; }
-  .hs-ic .v3-icon { width: 16px; height: 16px; }
-  .hs-pill b { font-size: 13px; line-height: 16px; }
-  .hs-pill small { font-size: 11px; line-height: 13px; }
-  .hs { left: var(--mx, var(--x)); top: var(--my, var(--y)); }
-  .hs-line { height: 52px; } .hs-pill { bottom: 59px; } .hs-down .hs-pill { top: 59px; }
+}
 }
 
 /* ---- Inhalte unter dem Rundgang ----------------------------------------- */
@@ -319,6 +354,8 @@
     border-radius: 30px; background: rgba(37, 64, 50, .3); border: 1px solid rgba(255,255,255,.25);
   }
   .v3 .bnav-bar { border-radius: 22px; background: var(--linen); }
-  /* Rundgang endet über der Navigation */
-  .v3-hero { height: calc(100svh - 16px - 88px - env(safe-area-inset-bottom)); min-height: 560px; }
+}
+/* Schmale Tablets: Rundgang endet über der Navigation */
+@media (min-width: 701px) and (max-width: 760px) {
+  .v3-hero { height: calc(100svh - 32px - 88px - env(safe-area-inset-bottom)); min-height: 560px; }
 }

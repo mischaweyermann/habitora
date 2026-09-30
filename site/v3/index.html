@@ -40,21 +40,15 @@
             <ul class="v3-hotspots" aria-label="Details im Raum Bad"><li class="hs" style="--x:27%;--y:62%;--mx:36%;--my:64%"><span class="hs-pill"><span class="hs-ic"><svg class="v3-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18v3H3z"/><path d="M5 12v8M19 12v8M9 16h6"/></svg></span><span><small>Möbel</small><b>Freistehender Waschtisch</b></span></span><span class="hs-line"></span><span class="hs-dot"></span></li><li class="hs" style="--x:70%;--y:40%;--mx:50%;--my:40%"><span class="hs-pill"><span class="hs-ic"><svg class="v3-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h12v5H4z"/><path d="M16 6.5h3v5h-7v3"/><path d="M11 14.5h2V21h-2z"/></svg></span><span><small>Farbe</small><b>Wände in Salbei</b></span></span><span class="hs-line"></span><span class="hs-dot"></span></li><li class="hs hs-desk" style="--x:70%;--y:86%"><span class="hs-pill"><span class="hs-ic"><svg class="v3-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20L9 4h6l6 16z"/><path d="M8 9h8M6.5 14h11"/></svg></span><span><small>Material</small><b>Fugenloser Boden</b></span></span><span class="hs-line"></span><span class="hs-dot"></span></li></ul>
           </div>
         </div>
-        <div class="v3-scene" id="raum-idee" role="tabpanel" aria-labelledby="rt-idee" aria-hidden="true">
-          <div class="v3-cover">
-            <img src="/assets/img/wohnen-skizze.webp" width="1920" height="1280" alt="Gezeichnete Skizze des Wohnraums" loading="lazy">
-            <ul class="v3-hotspots" aria-label="Details im Raum Die Idee"><li class="hs" style="--x:30%;--y:60%;--mx:40%;--my:62%"><span class="hs-pill"><span class="hs-ic"><svg class="v3-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg></span><span><small>Phase</small><b>Erster Entwurf</b></span></span><span class="hs-line"></span><span class="hs-dot"></span></li><li class="hs" style="--x:78%;--y:70%;--mx:48%;--my:82%"><span class="hs-pill"><span class="hs-ic"><svg class="v3-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 11h7V4M11 15h9M15 15v5"/></svg></span><span><small>Planung</small><b>Möblierung &amp; Wege</b></span></span><span class="hs-line"></span><span class="hs-dot"></span></li><li class="hs hs-desk hs-down" style="--x:47%;--y:22%"><span class="hs-pill"><span class="hs-ic"><svg class="v3-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4v-4h4v-4h4V8h4V4"/></svg></span><span><small>Bestand</small><b>Galerie bleibt</b></span></span><span class="hs-line"></span><span class="hs-dot"></span></li></ul>
-          </div>
-        </div>
     </div>
 
     <header class="v3-header">
-      <a class="logo" href="/v3/" aria-label="Habitora – Startseite"><img src="/assets/img/logo-hell.svg" alt="Habitora" width="151" height="30"></a>
+      <a class="logo" href="/v3/" aria-label="Habitora – Startseite"><img class="logo-hell" src="/assets/img/logo-hell.svg" alt="Habitora" width="151" height="30"><img class="logo-primaer" src="/assets/img/logo.svg" alt="" width="151" height="30"></a>
       <nav class="v3-nav" aria-label="Hauptnavigation">
         <a href="#angebot">Angebot</a>
         <a href="#finder">Angebot finden</a>
         <a href="#ablauf">Ablauf</a>
-        <a class="v3-btn v3-btn-light v3-btn-sm" href="#kontakt">Kontakt</a>
+        <a class="v3-btn v3-btn-light v3-btn-sm v3-header-btn" href="#kontakt">Kontakt</a>
       </nav>
     </header>
 
@@ -65,7 +59,7 @@
         <a class="v3-btn v3-btn-light" href="#finder">Passendes Angebot finden</a>
       </div>
 
-      <button class="v3-side v3-prev" type="button" data-raum-schritt="-1"><span class="v3-side-icon"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="v3-side-name">Die Idee</span></button>
+      <button class="v3-side v3-prev" type="button" data-raum-schritt="-1"><span class="v3-side-icon"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="v3-side-name">Bad</span></button>
       <button class="v3-side v3-next" type="button" data-raum-schritt="1"><span class="v3-side-name">Küche</span><span class="v3-side-icon"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
 
       <div class="v3-dock">
@@ -74,7 +68,7 @@
           <b>Wohnen</b>
         </div>
         <div class="v3-tabs" role="tablist" aria-label="Räume">
-          <button class="v3-tab" type="button" role="tab" id="rt-wohnen" aria-controls="raum-wohnen" aria-selected="true" data-bild="/assets/img/wohnen.webp" data-name="Wohnen">Wohnen</button><button class="v3-tab" type="button" role="tab" id="rt-kueche" aria-controls="raum-kueche" aria-selected="false" tabindex="-1" data-bild="/assets/img/kueche.webp" data-name="Küche">Küche</button><button class="v3-tab" type="button" role="tab" id="rt-bad" aria-controls="raum-bad" aria-selected="false" tabindex="-1" data-bild="/assets/img/bad.webp" data-name="Bad">Bad</button><button class="v3-tab" type="button" role="tab" id="rt-idee" aria-controls="raum-idee" aria-selected="false" tabindex="-1" data-bild="/assets/img/wohnen-skizze.webp" data-name="Die Idee">Die Idee</button>
+          <button class="v3-tab" type="button" role="tab" id="rt-wohnen" aria-controls="raum-wohnen" aria-selected="true" data-bild="/assets/img/wohnen.webp" data-name="Wohnen">Wohnen</button><button class="v3-tab" type="button" role="tab" id="rt-kueche" aria-controls="raum-kueche" aria-selected="false" tabindex="-1" data-bild="/assets/img/kueche.webp" data-name="Küche">Küche</button><button class="v3-tab" type="button" role="tab" id="rt-bad" aria-controls="raum-bad" aria-selected="false" tabindex="-1" data-bild="/assets/img/bad.webp" data-name="Bad">Bad</button>
         </div>
       </div>
       <button class="v3-zoom" type="button" aria-pressed="false" aria-label="Bild vergrössern"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4M8.5 11h5"/><path class="zoom-plus" d="M11 8.5v5"/></svg></button>
