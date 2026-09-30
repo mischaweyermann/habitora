@@ -28,6 +28,11 @@
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) aktiv = punkte[punkte.length - 1];
       markiere(aktiv);
     };
+    // erst nach etwas Scrollen einblenden
+    var zeigeBnav = function () { bnav.classList.toggle("is-sichtbar", window.scrollY > 100); };
+    window.addEventListener("scroll", zeigeBnav, { passive: true });
+    zeigeBnav();
+
     if (punkte.length) {
       window.addEventListener("scroll", function () { if (!geplant) { geplant = true; requestAnimationFrame(pruefe); } }, { passive: true });
       window.addEventListener("resize", pruefe);
@@ -105,6 +110,7 @@
       vorschau.style.setProperty("--px", (t.left + t.width / 2 - d.left) + "px");
       if (vImg.getAttribute("src") !== tab.dataset.bild) vImg.setAttribute("src", tab.dataset.bild);
       vName.textContent = tab.dataset.name;
+      vorschau.classList.toggle("is-hover", tab !== rtabs[index]);
     };
     var geheZu = function (i, fokus) {
       index = (i + rtabs.length) % rtabs.length;
