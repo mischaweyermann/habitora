@@ -138,8 +138,11 @@
 
     rtabs.forEach(function (tab, n) {
       tab.addEventListener("click", function () { geheZu(n); });
-      tab.addEventListener("mouseenter", function () { zeigeVorschau(tab); });
-      tab.addEventListener("mouseleave", function () { zeigeVorschau(rtabs[index]); });
+      tab.addEventListener("mouseenter", function () {
+        if (!vorschau.classList.contains("is-sichtbar")) vorschauTab = null; // beim Erscheinen immer aufblasen
+        zeigeVorschau(tab);
+        vorschau.classList.add("is-sichtbar");
+      });
       tab.addEventListener("keydown", function (e) {
         var z = { ArrowRight: n + 1, ArrowLeft: n - 1, Home: 0, End: rtabs.length - 1 }[e.key];
         if (z === undefined) return;
@@ -147,15 +150,10 @@
         geheZu(z, true);
       });
     });
+    // Vorschau verschwindet, sobald die Maus die Reiter verlässt
+    tour.querySelector(".v3-tabs").addEventListener("mouseleave", function () { vorschau.classList.remove("is-sichtbar"); });
     tour.querySelectorAll("[data-raum-schritt]").forEach(function (btn) {
       btn.addEventListener("click", function () { geheZu(index + Number(btn.dataset.raumSchritt)); });
-    });
-    var zoom = tour.querySelector(".v3-zoom");
-    zoom.addEventListener("click", function () {
-      var an = !tour.classList.contains("is-zoom");
-      tour.classList.toggle("is-zoom", an);
-      zoom.setAttribute("aria-pressed", an ? "true" : "false");
-      zoom.setAttribute("aria-label", an ? "Bild verkleinern" : "Bild vergrössern");
     });
 
     // Wischen auf dem Handy

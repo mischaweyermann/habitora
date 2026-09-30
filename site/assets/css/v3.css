@@ -47,9 +47,8 @@
 .v3-cover {
   position: absolute; left: 50%; top: 50%;
   width: max(100cqw, 150cqh); height: max(100cqh, 66.667cqw);
-  transform: translate(-50%, -50%) scale(var(--zoom, 1)); transition: transform .6s ease;
+  transform: translate(-50%, -50%);
 }
-.v3-hero.is-zoom { --zoom: 1.2; }
 .v3-cover img { width: 100%; height: 100%; display: block; }
 .v3-stage::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -157,7 +156,11 @@
   width: 164px; padding: 12px 12px 16px; border-radius: 22px; text-align: center;
   background: var(--preview-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   transform-origin: 50% calc(100% + var(--steg)); /* bläst sich vom Reiter aus auf */
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .2s ease, visibility 0s .2s;
 }
+/* nur sichtbar, solange die Maus auf einem Reiter liegt */
+.v3-preview.is-sichtbar { opacity: 1; visibility: visible; transition: opacity .2s ease; }
 /* Wechsel zu einem anderen Reiter: Kachel springt an den neuen Platz und bläst sich auf */
 .v3-preview.is-pop { animation: vorschau-pop .45s cubic-bezier(.34, 1.56, .64, 1); }
 @keyframes vorschau-pop {
@@ -181,18 +184,19 @@
 .v3-preview img { width: 100%; aspect-ratio: 1.1; object-fit: cover; border-radius: 14px; }
 .v3-preview b { display: block; margin-top: 12px; font: 600 16px/20px var(--display); color: var(--sage); }
 
-.v3-zoom {
-  position: absolute; right: 20px; bottom: 20px; width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+/* Knopf unten rechts: weiter zum nächsten Abschnitt */
+.v3-weiter {
+  position: absolute; right: 20px; bottom: 20px; width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center; color: var(--sage); background: var(--glass-strong);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: background .2s;
 }
-.v3-zoom .zoom-plus { display: inline; }
-.v3-zoom[aria-pressed="true"] .zoom-plus { display: none; }
-.v3-zoom:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.v3-weiter svg { transition: transform .25s ease; }
+.v3-weiter:hover { background: var(--linen); }
+.v3-weiter:hover svg { transform: translateY(3px); }
+.v3-weiter:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
-.v3-side, .v3-zoom, .v3-preview { display: none; }
-.js .v3-side, .js .v3-zoom, .js .v3-preview { display: flex; }
-.js .v3-zoom { display: grid; }
+.v3-side, .v3-preview { display: none; }
+.js .v3-side { display: flex; }
 .js .v3-preview { display: block; }
 
 @media (max-width: 960px) {
@@ -215,16 +219,16 @@
   .v3-header .logo img { width: 110px; }
   .v3-frame { inset: 0; border: 0; border-radius: 0; }
   .v3-intro {
-    top: auto; left: 0; right: 0; bottom: 64px; max-width: none; padding: 0 var(--v3-rand);
+    top: auto; left: 0; right: 0; bottom: calc(112px + env(safe-area-inset-bottom)); max-width: none; padding: 0 var(--v3-rand);
     border: 0; border-radius: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none;
   }
   .v3-intro .v3-eyebrow { font-size: 11px; letter-spacing: .12em; color: var(--on-dark-soft); }
   .v3-intro h1 { font-size: clamp(2.2rem, 10.5vw, 2.8rem); line-height: 1.05; margin: 10px 0 18px; }
   /* Blättern: Pfeile mit Raumname links und rechts, Reiter als Punkte in der Mitte */
-  .v3-side { top: auto; bottom: 10px; transform: none; flex-direction: row; padding: 8px; font-size: 14px; text-shadow: none; }
+  .v3-side { top: auto; bottom: calc(34px + env(safe-area-inset-bottom)); transform: none; flex-direction: row; padding: 8px; font-size: 14px; text-shadow: none; }
   .v3-side-name, .v3-next .v3-side-name { writing-mode: horizontal-tb; transform: none; }
   .v3-prev { left: 12px; } .v3-next { right: 12px; }
-  .v3-dock { bottom: 12px; }
+  .v3-dock { bottom: calc(36px + env(safe-area-inset-bottom)); }
   .v3-tabs { gap: 8px; align-items: center; }
   .v3-tab {
     width: 8px; height: 8px; padding: 0; font-size: 0; border-radius: 999px;
@@ -240,7 +244,7 @@
     background: var(--linen); color: var(--sage);
   }
   .v3-preview { display: none !important; }
-  .v3-zoom { display: none !important; }
+  .v3-weiter { display: none; }
 }
 
 /* ---- Inhalte unter dem Rundgang ----------------------------------------- */
@@ -259,6 +263,10 @@
 .v3-pills li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: var(--linen); font-size: 13px; color: var(--sage); }
 .v3-pills-lg li { padding: 12px 20px; font-size: 14px; }
 .v3-pills .v3-icon { width: 18px; height: 18px; color: var(--sage); }
+/* Einleitung auf Sage: feine Umriss-Pills statt heller Flächen */
+.v3-about .v3-pills li { background: none; border: 1px solid rgba(255,255,255,.22); color: var(--on-dark-soft); font-weight: 400; }
+.v3-about .v3-pills-lg li { padding: 9px 16px; font-size: 13px; }
+.v3-about .v3-pills .v3-icon { width: 16px; height: 16px; stroke-width: 1.25; color: var(--on-dark-soft); }
 @media (max-width: 760px) { .v3-about { grid-template-columns: 1fr; } }
 
 /* Angebot: Reiter + Karte (Bild · Text auf Linen · Eckdaten auf Sage) */
@@ -338,7 +346,18 @@
 .v3-steps li:last-child .v3-icon, .v3-steps li:last-child h3 { color: #fff; }
 .v3-steps li:last-child .v3-nr { color: #fff; }
 @media (max-width: 960px) { .v3-steps { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 520px) { .v3-steps { grid-template-columns: 1fr; } .v3-steps li { min-height: 0; } .v3-nr { padding-top: 28px; } }
+/* Handy: kompakte Zeilen – Nummer links, Titel und Text rechts; Überzeile entfällt (Nummer sagt es schon) */
+@media (max-width: 520px) {
+  .v3-steps { grid-template-columns: 1fr; gap: 8px; }
+  .v3-steps li {
+    min-height: 0; padding: 16px 18px; border-radius: 18px;
+    display: grid; grid-template-columns: 2.6rem 1fr; column-gap: 12px; align-items: baseline;
+  }
+  .v3-steps .v3-kopf { display: none; }
+  .v3-nr { grid-row: 1 / span 2; margin: 0; padding: 0; font-size: 1.9rem; }
+  .v3-steps h3 { font-size: 1.125rem; margin: 0 0 4px; }
+  .v3-steps p { font-size: 14px; }
+}
 
 .v3-contact { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(28px, 5vw, 72px); padding: clamp(24px, 5vw, 64px); }
 .v3-contact h2 { font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1.05; letter-spacing: -0.02em; margin: 12px 0 20px; }
