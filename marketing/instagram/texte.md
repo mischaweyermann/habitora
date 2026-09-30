@@ -1,13 +1,24 @@
 # Instagram – Texte zu den Posts
 
 Zu jedem Bild gibt es einen Text zum Kopieren. Alles in **[eckigen Klammern]** bitte anpassen.
-Die Bilder liegen im Ordner `bilder`, in Figma auf der Seite „Social Media“ im Bereich „Instagram“.
+In Figma liegt alles auf der Seite „Social Media“ in den Bereichen „Instagram · …“.
+
+## Welches Format?
+
+| Ordner | Format | Wofür |
+|---|---|---|
+| `bilder/posts-4x5` | Hochformat 1080 × 1350 | **Empfohlen.** Nimmt im Feed am meisten Platz ein. |
+| `bilder/posts-1x1` | Quadrat 1080 × 1080 | Gleiche Posts im klassischen Quadrat, falls dir das lieber ist. |
+| `bilder/karussell-…-4x5` / `-1x1` | mehrseitig, Seiten 1, 2, 3 … | Mehrere Bilder in einem Post zum Durchwischen. |
+| `bilder/story` | 1080 × 1920 | Story |
+
+Pro Post nur **ein** Format verwenden. Bei Karussells müssen alle Seiten dasselbe Format haben (alle 4:5 oder alle 1:1).
 
 **Reihenfolge:** Am besten in dieser Reihenfolge posten, etwa 2 pro Woche. Instagram zeigt den neuesten Post oben links. Nach 3 Posts ergibt sich schon eine schöne erste Reihe.
 
 ---
 
-## 01 · Willkommen (`01-willkommen.png`)
+## 01 · Willkommen (`01-willkommen.png`, 4:5 oder 1:1)
 
     Willkommen bei Habitora! 🌿
 
@@ -95,7 +106,47 @@ Die Bilder liegen im Ordner `bilder`, in Figma auf der Seite „Social Media“ 
 
     #kostenlos #einrichtungsberatung #wohnideen #interiorschweiz #[ort]
 
-## Story · Kennenlernen (`story-kennenlernen.png`)
+---
+
+## Karussells (mehrseitige Posts)
+
+**So postest du ein Karussell:** In Instagram auf „+“ → „Beitrag“ → oben rechts das Symbol mit den zwei Quadraten („Mehrere auswählen“) antippen → die Seiten **in der Reihenfolge 1, 2, 3 …** antippen → weiter.
+
+Karussells werden oft länger angeschaut und häufiger gespeichert als einzelne Bilder. Instagram zeigt sie deshalb mehr Leuten.
+
+### Karussell „Angebote“ (5 Seiten, Ordner `karussell-angebote-…`)
+
+    Drei Wege zum neuen Raum 🌿 Wisch dich durch:
+
+    → Raum-Check: ein Besuch, eine ehrliche Einschätzung, drei Ideen
+    → Wohnkonzept: Farben, Licht, Möbel und Materialien für 3–5 Räume
+    → Begleitung: von der Planung bis zur fertigen Einrichtung
+
+    Nicht sicher, was passt? Auf habitora.ch findest du es mit vier kurzen Fragen heraus. Link in der Bio.
+
+    #einrichtungsberatung #wohnkonzept #interiordesign #interiorschweiz #wohnideen #[ort]
+
+### Karussell „Tipps“ (5 Seiten, Ordner `karussell-tipps-…`)
+
+    Drei Ideen für mehr Ruhe im Wohnzimmer. Alle sofort umsetzbar, ganz ohne neue Möbel. Wisch dich durch 👉
+
+    Welcher Tipp ist dein Favorit? Schreib's in die Kommentare. Und speichere dir den Post für später 🔖
+
+    #wohntipps #wohnzimmerideen #gemütlich #einrichtungstipps #interiorschweiz #[ort]
+
+### Karussell „Skizze → Ergebnis“ (3 Seiten, Ordner `karussell-skizze-…`)
+
+    Vorher: eine Skizze. Nachher: ein Zuhause. ✏️ → 🏡
+
+    Wisch nach rechts und sieh, wie aus der Idee ein Raum wird. So arbeiten wir: zuerst zuhören und zeichnen, dann gemeinsam umsetzen, selbst oder mit Begleitung.
+
+    Das erste Gespräch ist kostenlos. Link in der Bio.
+
+    #vorhernachher #interiordesign #skizze #wohnzimmer #wohnenschweiz #[ort]
+
+---
+
+## Story · Kennenlernen (`story/story-kennenlernen.png`)
 
 Beim Posten in Instagram einen **Link-Sticker** auf habitora.ch hinzufügen und ihn auf das Foto oben setzen. Der untere Teil mit dem Text soll frei bleiben.
 
