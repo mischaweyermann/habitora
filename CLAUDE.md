@@ -7,9 +7,9 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
 ## Wo was liegt
 
 - `site/` – alles, was online geht. **Nur hier Inhalte ändern.**
-  - `site/index.html` – Startseite (Texte, Angebot, Ablauf, Kontakt)
-  - `site/v2/index.html` – Designvariante 2 der Startseite (habitora.ch/v2), eigener Stil in `site/assets/css/v2.css`. Kopf- und Fussbereich weichen hier bewusst ab. Texte bei Änderungen an der Startseite hier ebenfalls nachführen, solange beide Varianten bestehen.
-  - `site/v3/index.html` – Designvariante 3 (habitora.ch/v3): Raum-Rundgang mit Hinweis-Schildern im Bild, Stil in `site/assets/css/v3.css`. Gleiche Regel wie bei v2.
+  - `site/index.html` – Startseite (früher Designvariante 3): Raum-Rundgang mit Hinweis-Schildern im Bild, Angebot, Angebotsfinder, Ablauf, Kontakt. Eigener Stil in `site/assets/css/v3.css` (baut auf `style.css` auf). Kopf- und Fussbereich weichen hier bewusst von Impressum und Fehlerseite ab.
+  - `site/v3/` – leitet nur noch auf die Startseite weiter (alte Adresse habitora.ch/v3).
+  - `site/archiv/v1/`, `site/archiv/v2/` – archivierte frühere Designvarianten (habitora.ch/archiv/v1, /archiv/v2), Stil in `style.css` bzw. `v2.css`. Nicht mehr pflegen und Texte nicht mehr nachführen; nicht löschen, bis Mischa es sagt. `site/v2/` leitet auf `/archiv/v2/` weiter.
   - `site/impressum/index.html` – Impressum
   - `site/404.html` – Fehlerseite
   - `site/assets/css/style.css` – Gestaltung. Farben und Schriften stehen oben in `:root`.
@@ -23,7 +23,7 @@ Die Seite wird gepflegt von Mischa (technisch verantwortlich) und seiner Mutter,
 ## So wird eine Änderung veröffentlicht
 
 1. Änderung in `site/` machen.
-2. Kopf- und Fussbereich (Header, Navigation, Footer, Handy-Navigation unten `.bnav`) sind in jeder HTML-Datei einzeln vorhanden. Wenn du dort etwas änderst, ändere es in **allen** HTML-Dateien gleich.
+2. Kopf- und Fussbereich (Header, Navigation, Footer, Handy-Navigation unten `.bnav`) sind in jeder HTML-Datei einzeln vorhanden. Wenn du dort etwas änderst, ändere es in **allen** HTML-Dateien gleich (ausgenommen `site/archiv/`).
 3. Neuen Branch anlegen, committen und einen Pull Request gegen `main` öffnen. Mischa prüft und gibt frei; erst dann geht die Änderung online (ca. 1–2 Minuten nach dem Merge).
    - **Branch-Name:** Ein vorgegebener Zufallsname (z. B. `claude/sleepy-newton-3t93j0`) wird vor dem ersten Push umbenannt (`git branch -m <name>`); diese Regel ist die ausdrückliche Erlaubnis dafür.
    - Format: kurz, deutsch, klein, nur `a–z`, `0–9` und `-`, kein Präfix, höchstens ca. 30 Zeichen. Er sagt, *was* sich ändert, z. B. `kontakt-telefon`, `v3-rahmen`, `impressum-adresse`, `logo-neu`.
