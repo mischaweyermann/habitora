@@ -2,6 +2,59 @@
   "use strict";
   document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
+  /* ---- Hero: Schieberegler zwischen Skizze und Foto ---------------------- */
+  var hero = document.querySelector(".hero");
+  var griff = hero && hero.querySelector(".hero-handle");
+  if (griff) {
+    var media = hero.querySelector(".hero-media");
+    var tagIdee = hero.querySelector(".tag-idee");
+    var tagErgebnis = hero.querySelector(".tag-ergebnis");
+    var MIN = 5, MAX = 95;
+    var aktuell = function () { return parseFloat(getComputedStyle(hero).getPropertyValue("--split")) || 50; };
+    var anzeigen = function (p) {
+      var r = Math.round(p);
+      griff.setAttribute("aria-valuenow", r);
+      griff.setAttribute("aria-valuetext", r + " Prozent Skizze");
+      tagIdee.classList.toggle("is-weg", p < 22);
+      tagErgebnis.classList.toggle("is-weg", p > 78);
+    };
+    var setze = function (p) {
+      p = Math.min(MAX, Math.max(MIN, p));
+      hero.style.setProperty("--split", p + "%");
+      anzeigen(p);
+    };
+    anzeigen(aktuell());
+    var ausZeiger = function (e) {
+      var box = media.getBoundingClientRect();
+      setze(((e.clientX - box.left) / box.width) * 100);
+    };
+
+    griff.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      griff.setPointerCapture(e.pointerId);
+      griff.classList.add("is-drag");
+      hero.classList.add("is-drag");
+      ausZeiger(e);
+    });
+    griff.addEventListener("pointermove", function (e) {
+      if (griff.hasPointerCapture(e.pointerId)) ausZeiger(e);
+    });
+    var loslassen = function () { griff.classList.remove("is-drag"); hero.classList.remove("is-drag"); };
+    griff.addEventListener("pointerup", loslassen);
+    griff.addEventListener("pointercancel", loslassen);
+
+    griff.addEventListener("keydown", function (e) {
+      var schritt = e.shiftKey ? 10 : 2, p = aktuell();
+      if (e.key === "ArrowLeft" || e.key === "ArrowDown") p -= schritt;
+      else if (e.key === "ArrowRight" || e.key === "ArrowUp") p += schritt;
+      else if (e.key === "Home") p = MIN;
+      else if (e.key === "End") p = MAX;
+      else return;
+      e.preventDefault();
+      setze(p);
+    });
+  }
+
   /* ---- Angebotsfinder ---------------------------------------------------- */
   var ANGEBOTE = {
     check: {
