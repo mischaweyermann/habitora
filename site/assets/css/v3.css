@@ -76,25 +76,32 @@
 .hs-down .hs-pill { bottom: auto; top: 91px; }
 @keyframes hs-puls { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
 
-/* Kopfzeile auf dem Bild */
+/* Kopfzeile: fest oben. Auf dem Bild um --kopf-y nach unten versetzt und ohne Hintergrund,
+   beim Scrollen gleitet sie nach oben und die helle Leiste blendet ein.
+   Es werden nur transform und opacity animiert, damit der Wechsel ruckelfrei bleibt. */
 .v3-header {
   --kopf-rand: 16px; /* = Abstand des Rundgangs zum Fensterrand */
-  position: fixed; z-index: 50; top: var(--kopf-rand); left: var(--kopf-rand); right: var(--kopf-rand);
-  height: 84px; padding: 0 var(--v3-rand);
+  --kopf-h: 68px;    /* Höhe der festen Leiste */
+  --kopf-y: 24px;    /* Versatz auf dem Bild: Mitte liegt wie bisher 58px unter dem Fensterrand */
+  position: fixed; z-index: 50; top: 0; left: 0; right: 0;
+  height: var(--kopf-h); padding: 0 calc(var(--v3-rand) + var(--kopf-rand));
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  transition: top .3s ease, left .3s ease, right .3s ease, height .3s ease, padding .3s ease, background-color .3s ease, box-shadow .3s ease;
+  transform: translateY(var(--kopf-y)); transition: transform .4s cubic-bezier(.2, .7, .2, 1);
 }
-.v3-header .logo { display: block; }
-.v3-header .logo img { width: 124px; }
-.v3-header .logo-primaer { display: none; }
-/* Beim Scrollen: feste helle Leiste, Logo in Sage, Knopf in Sage */
-.v3-header.is-fest {
-  top: 0; left: 0; right: 0; height: 68px; padding: 0 calc(var(--v3-rand) + var(--kopf-rand));
+.v3-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: rgba(249, 246, 240, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--mist);
+  opacity: 0; transition: opacity .4s ease;
 }
-.v3-header.is-fest .logo-hell { display: none; }
-.v3-header.is-fest .logo-primaer { display: block; }
+.v3-header .logo { display: block; position: relative; }
+.v3-header .logo img { display: block; width: 124px; transition: opacity .4s ease; }
+.v3-header .logo-primaer { position: absolute; left: 0; top: 0; opacity: 0; }
+/* Beim Scrollen: feste helle Leiste, Logo in Sage, Knopf in Sage */
+.v3-header.is-fest { transform: none; }
+.v3-header.is-fest::before { opacity: 1; }
+.v3-header.is-fest .logo-hell { opacity: 0; }
+.v3-header.is-fest .logo-primaer { opacity: 1; }
 .v3-header.is-fest .v3-nav a:not(.v3-btn) { color: var(--ink-soft); }
 .v3-header.is-fest .v3-nav a:not(.v3-btn):hover { color: var(--sage); }
 .v3-header.is-fest .v3-header-btn { background: var(--sage); color: #fff; }
@@ -149,7 +156,14 @@
   --preview-bg: var(--linen); /* deckend, gleiche Farbe wie der aktive Reiter */
   width: 164px; padding: 12px 12px 16px; border-radius: 22px; text-align: center;
   background: var(--preview-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  transition: left .35s ease;
+  transform-origin: 50% calc(100% + var(--steg)); /* bläst sich vom Reiter aus auf */
+}
+/* Wechsel zu einem anderen Reiter: Kachel springt an den neuen Platz und bläst sich auf */
+.v3-preview.is-pop { animation: vorschau-pop .45s cubic-bezier(.34, 1.56, .64, 1); }
+@keyframes vorschau-pop {
+  from { transform: translateX(-50%) scale(.2); opacity: 0; }
+  40% { opacity: 1; }
+  to { transform: translateX(-50%) scale(1); opacity: 1; }
 }
 /* Steg zum Reiter: oben und unten volle Breite, Seiten nach innen geschwungen (Sanduhr-Form) */
 .v3-preview::after {
@@ -197,8 +211,7 @@
     background: linear-gradient(180deg, rgba(30,34,31,.45) 0%, rgba(30,34,31,0) 22%, rgba(30,34,31,0) 36%, rgba(30,34,31,.55) 62%, rgba(30,34,31,.85) 100%);
   }
   .v3-hotspots { display: none; }
-  .v3-header { --kopf-rand: 0px; height: 68px; }
-  .v3-header.is-fest { height: 60px; }
+  .v3-header { --kopf-rand: 0px; --kopf-h: 60px; --kopf-y: 4px; }
   .v3-header .logo img { width: 110px; }
   .v3-frame { inset: 0; border: 0; border-radius: 0; }
   .v3-intro {
@@ -349,6 +362,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hs-dot::after { animation: none; }
   .v3-scene, .v3-cover, .v3-preview { transition: none; }
+  .v3-preview.is-pop { animation: none; }
 }
 
 /* Navigation unten: Glas-Rahmen wie im Rundgang, aktiv Midnight */
