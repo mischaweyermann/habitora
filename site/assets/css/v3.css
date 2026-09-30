@@ -77,12 +77,28 @@
 
 /* Kopfzeile auf dem Bild */
 .v3-header {
-  position: absolute; z-index: 3; top: 0; left: 0; right: 0; height: 84px; padding: 0 var(--v3-rand);
+  --kopf-rand: 16px; /* = Abstand des Rundgangs zum Fensterrand */
+  position: fixed; z-index: 50; top: var(--kopf-rand); left: var(--kopf-rand); right: var(--kopf-rand);
+  height: 84px; padding: 0 var(--v3-rand);
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  transition: top .3s ease, left .3s ease, right .3s ease, height .3s ease, padding .3s ease, background-color .3s ease, box-shadow .3s ease;
 }
+.v3-header .logo { display: block; }
 .v3-header .logo img { width: 124px; }
+.v3-header .logo-primaer { display: none; }
+/* Beim Scrollen: feste helle Leiste, Logo in Sage, Knopf in Sage */
+.v3-header.is-fest {
+  top: 0; left: 0; right: 0; height: 68px; padding: 0 calc(var(--v3-rand) + var(--kopf-rand));
+  background: rgba(249, 246, 240, .94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--mist);
+}
+.v3-header.is-fest .logo-hell { display: none; }
+.v3-header.is-fest .logo-primaer { display: block; }
+.v3-header.is-fest .v3-nav a:not(.v3-btn) { color: var(--ink-soft); }
+.v3-header.is-fest .v3-nav a:not(.v3-btn):hover { color: var(--sage); }
+.v3-header.is-fest .v3-header-btn { background: var(--sage); color: #fff; }
 .v3-nav { display: flex; align-items: center; gap: 28px; }
-.v3-nav a:not(.v3-btn) { color: rgba(255,255,255,.85); text-decoration: none; font-size: 14px; }
+.v3-nav a:not(.v3-btn) { color: rgba(255,255,255,.85); text-decoration: none; font-size: 14px; transition: color .3s; }
 .v3-nav a:not(.v3-btn):hover { color: #fff; }
 
 /* Weisser Rahmen */
@@ -176,7 +192,8 @@
     background: linear-gradient(180deg, rgba(30,34,31,.45) 0%, rgba(30,34,31,0) 22%, rgba(30,34,31,0) 36%, rgba(30,34,31,.55) 62%, rgba(30,34,31,.85) 100%);
   }
   .v3-hotspots { display: none; }
-  .v3-header { height: 68px; }
+  .v3-header { --kopf-rand: 0px; height: 68px; }
+  .v3-header.is-fest { height: 60px; }
   .v3-header .logo img { width: 110px; }
   .v3-frame { inset: 0; border: 0; border-radius: 0; }
   .v3-intro {
