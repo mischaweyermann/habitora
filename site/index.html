@@ -12,6 +12,7 @@
 <link rel="preload" href="/assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/img/wohnen.webp" as="image" type="image/webp">
+<link rel="preload" href="/assets/img/wohnen-skizze.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="/assets/css/style.css">
 <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -33,7 +34,13 @@
 
 <main>
   <section class="hero">
-    <div class="wrap hero-grid">
+    <div class="hero-media" aria-hidden="true">
+      <img class="hero-foto" src="/assets/img/wohnen.webp" width="1920" height="1280" alt="">
+      <img class="hero-skizze" src="/assets/img/wohnen-skizze.webp" width="1920" height="1280" alt="">
+      <span class="hero-tag tag-idee">Die Idee</span>
+      <span class="hero-tag tag-ergebnis">Das Ergebnis</span>
+    </div>
+    <div class="wrap">
       <div class="hero-text">
         <span class="label">Wohnen · Einrichten · Umgestalten</span>
         <h1>Räume, die zu dir <span>passen.</span></h1>
@@ -44,9 +51,6 @@
         </div>
         <p class="hero-note small">4 kurze Fragen · dauert etwa 1 Minute</p>
       </div>
-      <figure class="hero-img">
-        <img src="/assets/img/wohnen.webp" width="1920" height="1280" alt="Heller Wohnraum mit grünem Sofa, Sessel und Eichenparkett, dahinter eine offene Treppe">
-      </figure>
     </div>
   </section>
 
