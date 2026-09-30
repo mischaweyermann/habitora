@@ -55,6 +55,76 @@
     });
   }
 
+  /* ---- v3: Raum-Rundgang ------------------------------------------------- */
+  var tour = document.querySelector(".v3-hero");
+  if (tour) {
+    var rtabs = Array.prototype.slice.call(tour.querySelectorAll(".v3-tab"));
+    var dock = tour.querySelector(".v3-dock");
+    var vorschau = tour.querySelector(".v3-preview");
+    var vImg = vorschau.querySelector("img");
+    var vName = vorschau.querySelector("b");
+    var prevName = tour.querySelector(".v3-prev .v3-side-name");
+    var nextName = tour.querySelector(".v3-next .v3-side-name");
+    var index = 0;
+
+    var zeigeVorschau = function (tab) {
+      var d = dock.getBoundingClientRect(), t = tab.getBoundingClientRect();
+      vorschau.style.setProperty("--px", (t.left + t.width / 2 - d.left) + "px");
+      if (vImg.getAttribute("src") !== tab.dataset.bild) vImg.setAttribute("src", tab.dataset.bild);
+      vName.textContent = tab.dataset.name;
+    };
+    var geheZu = function (i, fokus) {
+      index = (i + rtabs.length) % rtabs.length;
+      rtabs.forEach(function (t, n) {
+        var an = n === index;
+        t.setAttribute("aria-selected", an ? "true" : "false");
+        t.tabIndex = an ? 0 : -1;
+        var szene = document.getElementById(t.getAttribute("aria-controls"));
+        szene.classList.toggle("is-aktiv", an);
+        if (an) szene.removeAttribute("aria-hidden"); else szene.setAttribute("aria-hidden", "true");
+      });
+      prevName.textContent = rtabs[(index - 1 + rtabs.length) % rtabs.length].dataset.name;
+      nextName.textContent = rtabs[(index + 1) % rtabs.length].dataset.name;
+      zeigeVorschau(rtabs[index]);
+      if (fokus) rtabs[index].focus();
+    };
+
+    rtabs.forEach(function (tab, n) {
+      tab.addEventListener("click", function () { geheZu(n); });
+      tab.addEventListener("mouseenter", function () { zeigeVorschau(tab); });
+      tab.addEventListener("mouseleave", function () { zeigeVorschau(rtabs[index]); });
+      tab.addEventListener("keydown", function (e) {
+        var z = { ArrowRight: n + 1, ArrowLeft: n - 1, Home: 0, End: rtabs.length - 1 }[e.key];
+        if (z === undefined) return;
+        e.preventDefault();
+        geheZu(z, true);
+      });
+    });
+    tour.querySelectorAll("[data-raum-schritt]").forEach(function (btn) {
+      btn.addEventListener("click", function () { geheZu(index + Number(btn.dataset.raumSchritt)); });
+    });
+    var zoom = tour.querySelector(".v3-zoom");
+    zoom.addEventListener("click", function () {
+      var an = !tour.classList.contains("is-zoom");
+      tour.classList.toggle("is-zoom", an);
+      zoom.setAttribute("aria-pressed", an ? "true" : "false");
+      zoom.setAttribute("aria-label", an ? "Bild verkleinern" : "Bild vergrössern");
+    });
+
+    // Wischen auf dem Handy
+    var startX = null;
+    tour.querySelector(".v3-stage").parentNode.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    tour.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 50 && !e.target.closest(".v3-tabs, a, button")) geheZu(index + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    window.addEventListener("resize", function () { zeigeVorschau(rtabs[index]); });
+    geheZu(0);
+  }
+
   /* ---- Angebotsfinder ---------------------------------------------------- */
   var ANGEBOTE = {
     check: {
@@ -76,6 +146,47 @@
 
   var finder = document.getElementById("finder-form");
   var kontakt = document.getElementById("kontaktformular");
+
+  // Gewähltes Angebot ins Kontaktformular übernehmen
+  var VORLAGE = "Hallo, ich interessiere mich für das Angebot «";
+  var waehleAngebot = function (name, fragebogen) {
+    if (!kontakt) return;
+    kontakt.querySelector("[name=dienstleistung]").value = name;
+    kontakt.querySelector("[name=fragebogen]").value = fragebogen || "";
+    var box = kontakt.querySelector(".form-choice");
+    box.querySelector("strong").textContent = name;
+    box.hidden = false;
+    var msg = kontakt.querySelector("[name=nachricht]");
+    if (!msg.value.trim() || msg.value.indexOf(VORLAGE) === 0) msg.value = VORLAGE + name + "».\n\n";
+    setTimeout(function () { kontakt.querySelector("[name=name]").focus({ preventScroll: true }); }, 400);
+  };
+  document.querySelectorAll("[data-anfrage]").forEach(function (el) {
+    el.addEventListener("click", function () { waehleAngebot(el.getAttribute("data-anfrage"), ""); });
+  });
+
+  /* ---- Reiter (v2: Angebote) --------------------------------------------- */
+  document.querySelectorAll("[role=tablist]").forEach(function (liste) {
+    if (liste.closest(".v3-hero")) return; // Rundgang hat eigene Logik (unten)
+    var reiter = Array.prototype.slice.call(liste.querySelectorAll("[role=tab]"));
+    var waehle = function (tab, fokus) {
+      reiter.forEach(function (t) {
+        var an = t === tab;
+        t.setAttribute("aria-selected", an ? "true" : "false");
+        t.tabIndex = an ? 0 : -1;
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !an;
+      });
+      if (fokus) tab.focus();
+    };
+    reiter.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { waehle(tab); });
+      tab.addEventListener("keydown", function (e) {
+        var n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: reiter.length - 1 }[e.key];
+        if (n === undefined) return;
+        e.preventDefault();
+        waehle(reiter[(n + reiter.length) % reiter.length], true);
+      });
+    });
+  });
 
   if (finder) {
     var schritt = 1;
@@ -188,16 +299,8 @@
     });
 
     finder.querySelector("[data-finder-request]").addEventListener("click", function () {
-      if (!kontakt || !empfehlung) return;
-      var text = zusammenfassung().map(function (z) { return z[0] + ": " + z[1]; }).join("\n");
-      kontakt.querySelector("[name=dienstleistung]").value = empfehlung.name;
-      kontakt.querySelector("[name=fragebogen]").value = text;
-      var box = kontakt.querySelector(".form-choice");
-      box.querySelector("strong").textContent = empfehlung.name;
-      box.hidden = false;
-      var msg = kontakt.querySelector("[name=nachricht]");
-      if (!msg.value.trim()) msg.value = "Hallo, ich interessiere mich für das Angebot «" + empfehlung.name + "».\n\n";
-      setTimeout(function () { kontakt.querySelector("[name=name]").focus({ preventScroll: true }); }, 400);
+      if (!empfehlung) return;
+      waehleAngebot(empfehlung.name, zusammenfassung().map(function (z) { return z[0] + ": " + z[1]; }).join("\n"));
     });
 
     finder.addEventListener("submit", function (e) { e.preventDefault(); });
