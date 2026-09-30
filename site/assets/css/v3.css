@@ -35,6 +35,7 @@
 
 /* ---- Rundgang ------------------------------------------------------------ */
 .v3-hero {
+  --tab-hover: rgba(255, 255, 255, .72); /* Reiter beim Darüberfahren: helles Glas, anders als der aktive (Linen) */
   --v3-rand: clamp(20px, 3vw, 40px); /* seitlicher Abstand von Kopfzeile und Rahmen – beide gleich breit */
   position: relative; margin: 16px; height: calc(100svh - 32px); min-height: 620px; max-height: 1000px;
   border-radius: var(--r-xl); overflow: hidden; background: var(--sage); color: #fff;
@@ -139,7 +140,7 @@
   background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   transition: background .25s, color .25s;
 }
-.v3-tab:hover { background: rgba(37,64,50,.6); }
+.v3-tab:not([aria-selected="true"]):hover { background: var(--tab-hover); color: var(--sage); }
 .v3-tab[aria-selected="true"] { background: var(--linen); color: var(--sage); }
 .v3-tab:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .v3-preview {
@@ -159,6 +160,10 @@
   -webkit-mask: var(--steg-form) center / 100% 100% no-repeat;
           mask: var(--steg-form) center / 100% 100% no-repeat;
 }
+/* Vorschau über einem Reiter, auf dem die Maus liegt: gleiche Farbe wie dieser Reiter.
+   Steg ohne Überlappung, damit sich das halbdurchsichtige Weiss nicht doppelt. */
+.v3-preview.is-hover { --preview-bg: var(--tab-hover); }
+.v3-preview.is-hover::after { top: 100%; height: var(--steg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .v3-preview img { width: 100%; aspect-ratio: 1.1; object-fit: cover; border-radius: 14px; }
 .v3-preview b { display: block; margin-top: 12px; font: 600 16px/20px var(--display); color: var(--sage); }
 
