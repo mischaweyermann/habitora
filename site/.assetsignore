@@ -1,0 +1,3 @@
+# Nicht an Cloudflare (Vorschau) ausliefern: PHP läuft dort nicht, Serverdatei nur für Metanet
+kontakt.php
+.htaccess
