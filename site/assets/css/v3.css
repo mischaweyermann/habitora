@@ -251,26 +251,20 @@
 }
 
 /* ---- Inhalte unter dem Rundgang ----------------------------------------- */
-.v3-section { position: relative; padding: 0 0 clamp(56px, 8vw, 104px); }
-.v3-section > .v3-wrap { position: relative; z-index: 1; }
-main { overflow-x: clip; } /* Grundriss-Akzente dürfen über den Rand ragen, ohne seitlich zu scrollen */
+.v3-section { padding: 0 0 clamp(56px, 8vw, 104px); }
 
-/* Grundriss-Akzente im Hintergrund: feine Linien in Sage, halb vom Rand angeschnitten.
-   Gleiche Zeichnung, je Abschnitt gedreht oder gespiegelt, damit es nicht nach Muster aussieht. */
-#angebot::before, #ablauf::before, #kontakt::before {
-  content: ""; position: absolute; z-index: 0; pointer-events: none;
-  width: clamp(320px, 42vw, 620px); aspect-ratio: 6 / 5;
-  background: url("../img/grundriss.svg") center / contain no-repeat;
-  opacity: .1;
+/* Grundriss-Textur im Hintergrund unter dem Rundgang (nahtlose Kachel, feine Linien in Sage).
+   Oben deckt eine Linen-Fläche genau den Bereich des Rundgangs samt Rand ab (gleiche Höhe wie .v3-hero + 2 × 16px),
+   damit die Textur erst darunter beginnt und durchgehend bis zum Fuss läuft. */
+.v3 {
+  --hero-bereich: calc(clamp(620px, 100svh - 32px, 1000px) + 32px);
+  background:
+    linear-gradient(var(--page), var(--page)) top / 100% var(--hero-bereich) no-repeat,
+    url("../img/grundriss-textur.svg") center top / 480px 480px repeat,
+    var(--page);
 }
-#angebot::before { right: -14vw; top: -6%; transform: rotate(-8deg); }
-#ablauf::before { left: -16vw; top: -40%; transform: rotate(90deg) scaleX(-1); }
-#kontakt::before { right: -12vw; bottom: 4%; transform: rotate(180deg); }
 @media (max-width: 700px) {
-  #angebot::before, #ablauf::before, #kontakt::before { width: 300px; opacity: .08; }
-  #angebot::before { right: -150px; top: -30px; }
-  #ablauf::before { left: -160px; top: -60px; }
-  #kontakt::before { right: -150px; bottom: auto; top: -40px; }
+  .v3 { --hero-bereich: max(560px, 100svh); }
 }
 .v3-first { padding-top: clamp(40px, 6vw, 72px); }
 .v3-panel { background: var(--panel); border-radius: var(--r-xl); }

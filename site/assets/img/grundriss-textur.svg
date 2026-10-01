@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none" stroke="#254032" stroke-linecap="square">
+  <!-- Hintergrund-Textur der Startseite: nahtlos kachelnder Grundriss.
+       Wände laufen über den Kachelrand weiter (y=160 und x=320), darum fügen sich die Kacheln zu einem Plan. -->
+  <defs>
+    <pattern id="raster" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="1" fill="#254032" stroke="none"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="480" fill="url(#raster)" stroke="none" opacity=".16"/>
+  <g stroke-opacity=".16">
+    <!-- Wände -->
+    <path stroke-width="5" d="M0 160H60M110 160H400M440 160H480M320 0V40M320 90V330M320 380V480"/>
+    <path stroke-width="3" d="M160 160V330H200M250 330H320"/>
+  </g>
+  <g stroke-opacity=".14" stroke-width="1.25">
+    <!-- Türen mit Schwenkbogen -->
+    <path d="M110 160V210"/><path d="M110 210A50 50 0 0 1 60 160" stroke-dasharray="3 4"/>
+    <path d="M400 160V120"/><path d="M400 120A40 40 0 0 1 440 160" stroke-dasharray="3 4"/>
+    <path d="M320 90H370"/><path d="M370 90A50 50 0 0 0 320 40" stroke-dasharray="3 4"/>
+    <path d="M320 330H370"/><path d="M370 330A50 50 0 0 1 320 380" stroke-dasharray="3 4"/>
+    <path d="M200 330V380"/><path d="M200 380A50 50 0 0 0 250 330" stroke-dasharray="3 4"/>
+    <!-- Treppe -->
+    <path d="M170 24H290V128H170ZM182 24V128M194 24V128M206 24V128M218 24V128M230 24V128M242 24V128M254 24V128M266 24V128M278 24V128M176 76H284"/>
+    <!-- Bett, Tisch, Teppich -->
+    <path d="M380 370H460V460H380ZM380 396H460M392 382H418M422 382H448"/>
+    <circle cx="410" cy="250" r="28"/>
+    <path d="M24 196H136V300H24Z" stroke-dasharray="2 5"/>
+    <path d="M40 410H140M40 402V418M140 402V418"/>
+  </g>
+</svg>
