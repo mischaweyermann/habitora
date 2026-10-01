@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" fill="none" stroke="#254032" stroke-linecap="square">
+  <!-- Hintergrund-Akzent der Startseite: schematischer Grundriss (Wände, Türen, Fenster, Masslinie) -->
+  <g stroke-width="6">
+    <path d="M20 30H100M200 30H420M500 30H580V450H490M440 450H20V260M20 150V30"/>
+  </g>
+  <g stroke-width="3.5">
+    <path d="M300 30V300M300 350V450M300 230H360M410 230H580"/>
+  </g>
+  <g stroke-width="1.5">
+    <!-- Fenster -->
+    <path d="M100 26H200M100 34H200M420 26H500M420 34H500M16 150V260M24 150V260"/>
+    <!-- Türen mit Schwenkbogen -->
+    <path d="M300 350H250"/><path d="M250 350A50 50 0 0 1 300 300" stroke-dasharray="4 5"/>
+    <path d="M410 230V180"/><path d="M410 180A50 50 0 0 0 360 230" stroke-dasharray="4 5"/>
+    <path d="M490 450V400"/><path d="M490 400A50 50 0 0 0 440 450" stroke-dasharray="4 5"/>
+  </g>
+  <g stroke-width="1">
+    <!-- Teppich, Tisch, Masslinie -->
+    <rect x="70" y="190" width="170" height="130" rx="4" stroke-dasharray="3 6"/>
+    <circle cx="440" cy="120" r="38"/>
+    <path d="M20 480H580M20 472V488M300 472V488M580 472V488"/>
+  </g>
+</svg>
