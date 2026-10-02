@@ -172,7 +172,79 @@
     window.addEventListener("scroll", pruefeKopf, { passive: true });
     pruefeKopf();
 
-    window.addEventListener("resize", function () { zeigeVorschau(rtabs[index]); });
+    // Hinweis-Schilder so legen, dass keines abgeschnitten oder verdeckt wird.
+    // Pro Schild werden Richtung (oben/unten), Linienlänge und seitliche Lage durchprobiert;
+    // die erste Lage, die ganz im Rahmen liegt und nichts überdeckt, gewinnt. Passt keine, wird das Schild ausgeblendet.
+    var rahmen = tour.querySelector(".v3-frame");
+    var stage = tour.querySelector(".v3-stage");
+    var hindernisse = tour.querySelectorAll(".v3-intro, .v3-side, .v3-tabs, .v3-weiter");
+    var LUFT = 10; // Mindestabstand zu allem anderen
+    var ueberlappt = function (a, b) {
+      return a.l < b.r + LUFT && a.r > b.l - LUFT && a.t < b.b + LUFT && a.b > b.t - LUFT;
+    };
+    var ordneSchilder = function () {
+      var rr = rahmen.getBoundingClientRect(), rand = 4 + LUFT;
+      var feld = { l: rr.left + rand, r: rr.right - rand, t: rr.top + rand, b: rr.bottom - rand };
+      var drinnen = function (k) { return k.l >= feld.l && k.r <= feld.r && k.t >= feld.t && k.b <= feld.b; };
+      var feste = [];
+      hindernisse.forEach(function (el) {
+        var k = el.getBoundingClientRect();
+        if (k.width) feste.push({ l: k.left, r: k.right, t: k.top, b: k.bottom });
+      });
+      var sr = stage.getBoundingClientRect();
+      tour.querySelectorAll(".v3-cover").forEach(function (cover) {
+        // Lage ohne Zoom-Animation: die Fläche ist im Rundgang mittig
+        var cl = sr.left + (stage.clientWidth - cover.offsetWidth) / 2;
+        var ct = sr.top + (stage.clientHeight - cover.offsetHeight) / 2;
+        var belegt = feste.slice();
+        cover.querySelectorAll(".hs").forEach(function (hs) {
+          var pill = hs.querySelector(".hs-pill");
+          var w = pill.offsetWidth, h = pill.offsetHeight;
+          if (!w) return; // auf dieser Bildschirmgrösse ohnehin nicht gezeigt
+          if (hs.dataset.unten === undefined) hs.dataset.unten = hs.classList.contains("hs-down") ? "1" : "";
+          var x = cl + hs.offsetLeft, y = ct + hs.offsetTop;
+          var punkt = { l: x - 10, r: x + 10, t: y - 10, b: y + 10 };
+          var richtungen = hs.dataset.unten ? [true, false] : [false, true];
+          var lage = null;
+          if (drinnen(punkt) && !belegt.some(function (o) { return ueberlappt(punkt, o); })) {
+            [84, 56, 120, 36].some(function (linie) {
+              return richtungen.some(function (unten) {
+                var t = unten ? y + linie + 7 : y - linie - 7 - h;
+                // Schild nach links/rechts schieben; der Punkt bleibt dabei unter dem Schild (30px vom Rand)
+                var min = -(w - 30), max = -30;
+                var schuebe = [-38, Math.max(min, Math.min(max, feld.l - x)), Math.max(min, Math.min(max, feld.r - w - x)), -w / 2, min];
+                return schuebe.some(function (s) {
+                  var k = { l: x + s, r: x + s + w, t: t, b: t + h };
+                  var strich = { l: x, r: x, t: unten ? y : t + h, b: unten ? t : y };
+                  if (!drinnen(k) || belegt.some(function (o) { return ueberlappt(k, o) || ueberlappt(strich, o); })) return false;
+                  lage = { unten: unten, linie: linie, schub: s, kasten: k };
+                  return true;
+                });
+              });
+            });
+          }
+          hs.classList.toggle("hs-aus", !lage);
+          if (!lage) return;
+          hs.classList.toggle("hs-down", lage.unten);
+          hs.style.setProperty("--hs-linie", lage.linie + "px");
+          hs.style.setProperty("--hs-schub", lage.schub + "px");
+          belegt.push(lage.kasten, punkt);
+        });
+      });
+    };
+    var geplant = false;
+    var planeSchilder = function () {
+      if (geplant) return;
+      geplant = true;
+      requestAnimationFrame(function () { geplant = false; ordneSchilder(); });
+    };
+    // neu ordnen bei anderer Fenstergrösse, nach dem Laden der Schriften und wenn die Einblend-Animationen fertig sind
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(planeSchilder);
+    tour.addEventListener("animationend", function (e) { if (!e.target.closest(".hs")) planeSchilder(); });
+    window.addEventListener("load", planeSchilder);
+    planeSchilder();
+
+    window.addEventListener("resize", function () { zeigeVorschau(rtabs[index]); planeSchilder(); });
     geheZu(0);
   }
 
