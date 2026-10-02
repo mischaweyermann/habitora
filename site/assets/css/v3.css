@@ -252,6 +252,20 @@
 
 /* ---- Inhalte unter dem Rundgang ----------------------------------------- */
 .v3-section { padding: 0 0 clamp(56px, 8vw, 104px); }
+
+/* Hintergrund unter dem Rundgang: feines Punkteraster in Sage.
+   Oben deckt eine Linen-Fläche genau den Bereich des Rundgangs samt Rand ab (gleiche Höhe wie .v3-hero + 2 × 16px),
+   damit die Punkte erst darunter beginnen und ohne Naht bis zum Fuss laufen. */
+.v3 {
+  --hero-bereich: calc(clamp(620px, 100svh - 32px, 1000px) + 32px);
+  background:
+    linear-gradient(var(--page), var(--page)) top / 100% var(--hero-bereich) no-repeat,
+    url("../img/raster-punkte.svg") center top / 24px 24px repeat,
+    var(--page);
+}
+@media (max-width: 700px) {
+  .v3 { --hero-bereich: max(560px, 100svh); }
+}
 .v3-first { padding-top: clamp(40px, 6vw, 72px); }
 .v3-panel { background: var(--panel); border-radius: var(--r-xl); }
 .v3-head { text-align: center; margin-bottom: clamp(28px, 4vw, 44px); }
