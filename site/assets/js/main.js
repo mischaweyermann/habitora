@@ -176,6 +176,31 @@
     geheZu(0);
   }
 
+  /* ---- Startseite: Inhalte beim Scrollen einblenden ------------------------ */
+  // Setzt .v3-zeigen (unsichtbar) und, sobald der Teil ins Bild kommt, .ist-da. Die Bewegung selbst steht in v3.css.
+  // Bei reduzierter Bewegung oder ohne IntersectionObserver passiert nichts: alles bleibt sofort sichtbar.
+  var ruhig = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (document.body.classList.contains("v3") && !ruhig && "IntersectionObserver" in window) {
+    var gruppen = [
+      [".v3-about"], [".v3-head"], [".v3-otabs"], [".v3-offers"], ["#finder .v3-panel"],
+      [".v3-steps > li", true], [".v3-contact"]
+    ];
+    var beobachter = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("ist-da");
+        beobachter.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
+    gruppen.forEach(function (g) {
+      document.querySelectorAll(g[0]).forEach(function (el, i) {
+        el.classList.add("v3-zeigen");
+        if (g[1]) el.style.setProperty("--i", i); // nacheinander
+        beobachter.observe(el);
+      });
+    });
+  }
+
   /* ---- Angebotsfinder ---------------------------------------------------- */
   var ANGEBOTE = {
     check: {
