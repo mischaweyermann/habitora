@@ -253,15 +253,13 @@
 /* ---- Inhalte unter dem Rundgang ----------------------------------------- */
 .v3-section { padding: 0 0 clamp(56px, 8vw, 104px); }
 
-/* Hintergrund unter dem Rundgang: feines Punkteraster und darüber ein grosser Grundriss,
-   in dem jeder Raum nur einmal vorkommt (grundriss-plan.svg, 1600 × 5200, wiederholt sich nicht).
+/* Hintergrund unter dem Rundgang: feines Punkteraster in Sage.
    Oben deckt eine Linen-Fläche genau den Bereich des Rundgangs samt Rand ab (gleiche Höhe wie .v3-hero + 2 × 16px),
-   damit beides erst darunter beginnt und ohne Naht bis zum Fuss läuft. */
+   damit die Punkte erst darunter beginnen und ohne Naht bis zum Fuss laufen. */
 .v3 {
   --hero-bereich: calc(clamp(620px, 100svh - 32px, 1000px) + 32px);
   background:
     linear-gradient(var(--page), var(--page)) top / 100% var(--hero-bereich) no-repeat,
-    url("../img/grundriss-plan.svg") center var(--hero-bereich) / max(1600px, 100%) auto no-repeat,
     url("../img/raster-punkte.svg") center top / 24px 24px repeat,
     var(--page);
 }
