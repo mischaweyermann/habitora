@@ -455,10 +455,10 @@
   .v3-link svg { transition: transform .25s ease; }
   .v3-link:hover svg { transform: translate(2px, -2px); }
 
-  /* Lesefortschritt: feine Clay-Linie unter der festen Kopfzeile (nur in Browsern, die das können) */
+  /* Lesefortschritt: Clay-Linie (3px, deckt die Mist-Trennlinie mit ab) unter der festen Kopfzeile (nur in Browsern, die das können) */
   @supports (animation-timeline: scroll()) {
     .v3-header::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--clay);
+      content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; background: var(--clay);
       transform-origin: 0 50%; opacity: 0; transition: opacity .4s ease;
       animation: v3-fortschritt linear both; animation-timeline: scroll(root);
     }
