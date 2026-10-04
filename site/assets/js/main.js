@@ -214,10 +214,14 @@
     begleitung: {
       name: "Begleitung",
       text: "Von der Planung bis zur Umsetzung: Wir kümmern uns um Einkauf, Handwerker und Einrichtung, bis alles fertig ist."
+    },
+    reduktion: {
+      name: "Reduktion",
+      text: "Wir misten gemeinsam aus, bis nur noch das Wesentliche bleibt, und gestalten daraus einen ruhigen, zeitlosen Wohlfühlort, der genau zu dir passt."
     }
   };
   var UMFANG = { raum: "Ein einzelner Raum", mehrere: "Mehrere Räume", ganz: "Das ganze Zuhause", umzug: "Umzug oder Neubau" };
-  var HILFE = { ideen: "Ideen und Einschätzung", konzept: "Fertiges Konzept", begleitung: "Begleitung bis alles fertig ist" };
+  var HILFE = { ideen: "Ideen und Einschätzung", konzept: "Fertiges Konzept", begleitung: "Begleitung bis alles fertig ist", reduktion: "Ausmisten und reduzieren" };
   var FRAGEN = 4;
 
   var finder = document.getElementById("finder-form");
@@ -310,14 +314,14 @@
     };
 
     var berechne = function () {
-      var p = { check: 0, konzept: 0, begleitung: 0 };
+      var p = { check: 0, konzept: 0, begleitung: 0, reduktion: 0 };
       var u = wert("umfang"), h = wert("hilfe"), anzahl = raeume().length;
       if (u === "raum") p.check += 2;
       if (u === "mehrere") p.konzept += 2;
       if (u === "ganz") p.begleitung += 2;
       if (u === "umzug") { p.begleitung += 1; p.konzept += 1; }
       if (anzahl <= 1) p.check += 1; else if (anzahl <= 4) p.konzept += 1; else p.begleitung += 1;
-      var wunsch = { ideen: "check", konzept: "konzept", begleitung: "begleitung" }[h];
+      var wunsch = { ideen: "check", konzept: "konzept", begleitung: "begleitung", reduktion: "reduktion" }[h];
       p[wunsch] += 3;
       // Bei Gleichstand gewinnt, was sich die Person ausdrücklich gewünscht hat
       return Object.keys(p).reduce(function (best, k) {
