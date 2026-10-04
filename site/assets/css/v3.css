@@ -60,9 +60,12 @@
 .hs { position: absolute; left: var(--x); top: var(--y); }
 .hs-dot { position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,.4); box-shadow: inset 0 0 0 4px #fff; }
 .hs-dot::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(255,255,255,.6); animation: hs-puls 2.4s ease-out infinite; }
-.hs-line { position: absolute; left: -.5px; bottom: 7px; width: 1px; height: 84px; background: rgba(255,255,255,.75); }
+/* Länge der Linie (--hs-linie), seitliche Lage des Schilds (--hs-schub) und die Richtung (.hs-down) setzt main.js so,
+   dass kein Schild über den Rahmen hinausragt oder unter Titel-Kachel, Pfeilen, Reitern oder einem anderen Schild liegt.
+   Passt ein Schild nirgends hin, wird es ausgeblendet (.hs-aus). Neue Schilder werden automatisch mitberücksichtigt. */
+.hs-line { position: absolute; left: -.5px; bottom: 7px; width: 1px; height: var(--hs-linie, 84px); background: rgba(255,255,255,.75); }
 .hs-pill {
-  position: absolute; left: 0; bottom: 91px; transform: translateX(-38px);
+  position: absolute; left: 0; bottom: calc(var(--hs-linie, 84px) + 7px); transform: translateX(var(--hs-schub, -38px));
   display: flex; align-items: center; gap: 12px; white-space: nowrap;
   padding: 8px 22px 8px 8px; border-radius: 999px;
   background: var(--glass); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
@@ -72,7 +75,8 @@
 .hs-pill small { display: block; font-size: 12px; line-height: 16px; opacity: .85; }
 .hs-pill b { display: block; font: 600 15px/20px var(--display); }
 .hs-down .hs-line { bottom: auto; top: 7px; }
-.hs-down .hs-pill { bottom: auto; top: 91px; }
+.hs-down .hs-pill { bottom: auto; top: calc(var(--hs-linie, 84px) + 7px); }
+.hs.hs-aus { visibility: hidden; }
 @keyframes hs-puls { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
 
 /* Kopfzeile: fest oben. Auf dem Bild um --kopf-y nach unten versetzt und ohne Hintergrund,
@@ -115,7 +119,7 @@
 }
 .v3-frame > * { pointer-events: auto; }
 .v3-intro {
-  position: absolute; left: clamp(20px, 3vw, 40px); top: clamp(20px, 3vw, 40px); max-width: 420px;
+  position: absolute; left: 56px; top: clamp(20px, 3vw, 40px); max-width: 420px; /* links Platz für den Pfeil zum vorherigen Raum */
   padding: 24px 26px; border-radius: 20px;
   background: var(--glass); backdrop-filter: blur(16px) saturate(1.2); -webkit-backdrop-filter: blur(16px) saturate(1.2);
   border: 1px solid rgba(255,255,255,.22);
