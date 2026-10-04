@@ -217,11 +217,11 @@
     },
     reduktion: {
       name: "Reduktion",
-      text: "Wir misten gemeinsam aus, bis nur noch das Wesentliche bleibt, und gestalten daraus einen ruhigen, zeitlosen Wohlfühlort, der genau zu dir passt."
+      text: "Wir sortieren gemeinsam Bestehendes aus, bis nur noch das Wesentliche bleibt, und gestalten daraus einen ruhigen, zeitlosen Wohlfühlort, der genau zu dir passt."
     }
   };
   var UMFANG = { raum: "Ein einzelner Raum", mehrere: "Mehrere Räume", ganz: "Das ganze Zuhause", umzug: "Umzug oder Neubau" };
-  var HILFE = { ideen: "Ideen und Einschätzung", konzept: "Fertiges Konzept", begleitung: "Begleitung bis alles fertig ist", reduktion: "Ausmisten und reduzieren" };
+  var HILFE = { ideen: "Ideen und Einschätzung", konzept: "Fertiges Konzept", begleitung: "Begleitung bis alles fertig ist", reduktion: "Bestehendes aussortieren und reduzieren" };
   var FRAGEN = 4;
 
   var finder = document.getElementById("finder-form");
