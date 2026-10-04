@@ -485,6 +485,22 @@
     var WT_LANG = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
     var MON = ["Jan", "Feb", "März", "Apr", "Mai", "Juni", "Juli", "Aug", "Sept", "Okt", "Nov", "Dez"];
     var tage = [], tagAktiv = null;
+    var pfeile = termin.querySelectorAll(".termin-pfeil");
+    var pruefePfeile = function () {
+      var rest = tageBox.scrollWidth - tageBox.clientWidth - tageBox.scrollLeft;
+      var links = tageBox.scrollLeft > 2, rechts = rest > 2;
+      pfeile[0].disabled = !links;
+      pfeile[1].disabled = !rechts;
+      tageBox.classList.toggle("mehr-links", links);
+      tageBox.classList.toggle("mehr-rechts", rechts);
+    };
+    Array.prototype.forEach.call(pfeile, function (b) {
+      b.addEventListener("click", function () {
+        tageBox.scrollBy({ left: +b.getAttribute("data-richtung") * tageBox.clientWidth * 0.8, behavior: "smooth" });
+      });
+    });
+    tageBox.addEventListener("scroll", pruefePfeile, { passive: true });
+    window.addEventListener("resize", pruefePfeile);
     var datum = function (s) { var p = s.split("-"); return new Date(+p[0], p[1] - 1, +p[2]); };
     var knopf = function (klasse, html, frei, aktiv) {
       var b = document.createElement("button");
@@ -508,6 +524,7 @@
       }
     };
     var zeichne = function () {
+      var scroll = tageBox.scrollLeft;
       tageBox.innerHTML = ""; zeitenBox.innerHTML = "";
       tage.forEach(function (t) {
         var frei = t.zeiten.some(function (z) { return z.frei; });
@@ -517,6 +534,8 @@
         b.addEventListener("click", function () { tagAktiv = t; zeichne(); });
         tageBox.appendChild(b);
       });
+      tageBox.scrollTo({ left: scroll, behavior: "instant" });
+      pruefePfeile();
       if (!tagAktiv) return;
       tagAktiv.zeiten.forEach(function (z) {
         var wert = tagAktiv.tag + " " + z.zeit;

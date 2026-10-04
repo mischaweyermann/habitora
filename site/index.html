@@ -302,7 +302,11 @@
         <fieldset class="termin" data-termin hidden>
           <legend>Termin für ein Erstgespräch <span class="optional">(freiwillig)</span></legend>
           <p class="termin-hinweis">Kostenlos, rund 1 Stunde, per Telefon oder vor Ort. Graue Zeiten sind schon vergeben.</p>
-          <div class="termin-tage" role="group" aria-label="Tag wählen"></div>
+          <div class="termin-leiste">
+            <button class="termin-pfeil" type="button" data-richtung="-1" aria-label="Frühere Tage"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="termin-tage" role="group" aria-label="Tag wählen"></div>
+            <button class="termin-pfeil" type="button" data-richtung="1" aria-label="Spätere Tage"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
           <div class="termin-zeiten" role="group" aria-label="Uhrzeit wählen"></div>
           <p class="termin-auswahl" aria-live="polite"></p>
           <input type="hidden" name="termin" value="">
