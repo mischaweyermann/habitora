@@ -145,6 +145,81 @@ function termin_text($id) {
         . ', ' . date('H:i', $t) . '–' . date('H:i', $t + $TERMIN_DAUER * 60) . ' Uhr';
 }
 
+/** Text für eine Kalenderdatei maskieren. */
+function ics_text($v) {
+    return str_replace(["\\", ';', ',', "\r\n", "\n"], ['\\\\', '\\;', '\\,', '\\n', '\\n'], $v);
+}
+
+/** Lange Kalender-Zeilen umbrechen (max. 75 Bytes, ohne UTF-8-Zeichen zu teilen). */
+function ics_zeile($zeile) {
+    $teile = [];
+    while (strlen($zeile) > 75) {
+        $n = 75;
+        while ($n > 0 && (ord($zeile[$n]) & 0xC0) === 0x80) $n--;
+        $teile[] = substr($zeile, 0, $n);
+        $zeile = ' ' . substr($zeile, $n);
+    }
+    $teile[] = $zeile;
+    return implode("\r\n", $teile);
+}
+
+/** Kalenderdatei (.ics) für einen Termin, zum Eintragen per Klick. */
+function termin_ics($id, $uid, $titel, $beschreibung) {
+    global $TERMIN_DAUER;
+    $start = strtotime($id);
+    $utc = function ($t) { return gmdate('Ymd\THis\Z', $t); };
+    $zeilen = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Habitora//Terminwahl habitora.ch//DE',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        'UID:' . $uid . '@habitora.ch',
+        'DTSTAMP:' . $utc(time()),
+        'DTSTART:' . $utc($start),
+        'DTEND:' . $utc($start + $TERMIN_DAUER * 60),
+        'SUMMARY:' . ics_text($titel),
+        'DESCRIPTION:' . ics_text($beschreibung),
+        'LOCATION:' . ics_text('Telefon oder vor Ort (wird abgesprochen)'),
+        'BEGIN:VALARM',
+        'ACTION:DISPLAY',
+        'DESCRIPTION:' . ics_text($titel),
+        'TRIGGER:-PT1H',
+        'END:VALARM',
+        'END:VEVENT',
+        'END:VCALENDAR',
+    ];
+    return implode("\r\n", array_map('ics_zeile', $zeilen)) . "\r\n";
+}
+
+/**
+ * Macht aus Text + Kalenderdatei eine E-Mail mit Anhang.
+ * Ersetzt in $kopf die Inhalts-Angaben und liefert den E-Mail-Text.
+ */
+function mail_mit_kalender(array &$kopf, $text, $ics) {
+    $grenze = 'habitora-' . bin2hex(random_bytes(8));
+    $kopf = array_values(array_filter($kopf, function ($h) {
+        return stripos($h, 'Content-Type:') !== 0 && stripos($h, 'Content-Transfer-Encoding:') !== 0;
+    }));
+    $kopf[] = 'Content-Type: multipart/mixed; boundary="' . $grenze . '"';
+    return implode("\r\n", [
+        '--' . $grenze,
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: base64',
+        '',
+        rtrim(chunk_split(base64_encode($text), 76, "\r\n")),
+        '--' . $grenze,
+        'Content-Type: text/calendar; charset=UTF-8; method=PUBLISH; name="termin.ics"',
+        'Content-Disposition: attachment; filename="termin.ics"',
+        'Content-Transfer-Encoding: base64',
+        '',
+        rtrim(chunk_split(base64_encode($ics), 76, "\r\n")),
+        '--' . $grenze . '--',
+        '',
+    ]);
+}
+
 // ---- Direkter Aufruf ------------------------------------------------------
 if (realpath($_SERVER['SCRIPT_FILENAME'] ?? '') !== __FILE__) return;
 

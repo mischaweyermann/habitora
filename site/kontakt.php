@@ -130,6 +130,17 @@ $headers = [
     'X-Mailer: habitora.ch',
 ];
 
+if ($termin !== '') {
+    $ics = termin_ics($termin, $freigabeCode, 'Erstgespräch: ' . $name, implode("\n", [
+        'Erstgespräch mit ' . $name . ($leistung !== '' ? ' (' . $leistung . ')' : ''),
+        'E-Mail: ' . $email,
+        'Telefon: ' . ($telefon !== '' ? $telefon : '–'),
+        '',
+        $nachricht,
+    ]));
+    $text = mail_mit_kalender($headers, $text, $ics);
+}
+
 $ok = @mail($EMPFAENGER, $betreffKodiert, $text, implode("\r\n", $headers), '-f' . $ABSENDER);
 
 if (!$ok) {
@@ -147,6 +158,7 @@ if ($termin !== '') {
         '    ' . termin_text($termin),
         '',
         'Wir melden uns vorher kurz, um zu klären, ob wir telefonieren oder uns vor Ort treffen.',
+        'Mit der angehängten Datei «termin.ics» kannst du den Termin in deinen Kalender übernehmen.',
         'Falls der Termin nicht passt, antworte einfach auf diese E-Mail oder ruf an: 079 764 65 85.',
         '',
         'Herzliche Grüsse',
@@ -161,6 +173,11 @@ if ($termin !== '') {
         'Content-Transfer-Encoding: 8bit',
         'X-Mailer: habitora.ch',
     ];
+    $ics = termin_ics($termin, 'k-' . $freigabeCode, 'Erstgespräch mit Habitora', implode("\n", [
+        'Kostenloses Erstgespräch mit Habitora.',
+        'Telefon 079 764 65 85 · hallo@habitora.ch · habitora.ch',
+    ]));
+    $bestaetigung = mail_mit_kalender($kopf, $bestaetigung, $ics);
     @mail($email, '=?UTF-8?B?' . base64_encode('Dein Termin bei Habitora – ' . termin_text($termin)) . '?=', $bestaetigung, implode("\r\n", $kopf), '-f' . $ABSENDER);
 }
 
