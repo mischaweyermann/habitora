@@ -470,6 +470,83 @@
   if (params.get("fehler")) status.textContent = "Senden hat nicht geklappt. Bitte schreib direkt per E-Mail.";
 
   if (!window.fetch) return;
+
+  /* ---- Terminwahl ------------------------------------------------------- */
+  var termin = form.querySelector("[data-termin]");
+  var ladeTermine = function () {};
+  if (termin) {
+    var tageBox = termin.querySelector(".termin-tage");
+    var zeitenBox = termin.querySelector(".termin-zeiten");
+    var auswahl = termin.querySelector(".termin-auswahl");
+    var feldTermin = termin.querySelector("[name=termin]");
+    var msg = form.querySelector("[name=nachricht]");
+    var msgFrei = form.querySelector("[data-msg-optional]");
+    var WT = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+    var WT_LANG = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+    var MON = ["Jan", "Feb", "März", "Apr", "Mai", "Juni", "Juli", "Aug", "Sept", "Okt", "Nov", "Dez"];
+    var tage = [], tagAktiv = null;
+    var datum = function (s) { var p = s.split("-"); return new Date(+p[0], p[1] - 1, +p[2]); };
+    var knopf = function (klasse, html, frei, aktiv) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = klasse; b.innerHTML = html;
+      b.disabled = !frei; b.setAttribute("aria-pressed", aktiv ? "true" : "false");
+      return b;
+    };
+    var setzeTermin = function (wert) {
+      feldTermin.value = wert;
+      msg.required = !wert;
+      if (msgFrei) msgFrei.hidden = !wert;
+      form.querySelector("button[type=submit]").textContent = wert ? "Termin reservieren" : "Nachricht senden";
+      auswahl.innerHTML = "";
+      if (wert) {
+        var d = datum(wert.slice(0, 10));
+        auswahl.textContent = "Gewählt: " + WT_LANG[d.getDay()] + ", " + d.getDate() + ". " + MON[d.getMonth()] + ", " + wert.slice(11) + " Uhr";
+        var weg = document.createElement("button");
+        weg.type = "button"; weg.textContent = "entfernen";
+        weg.addEventListener("click", function () { setzeTermin(""); zeichne(); });
+        auswahl.appendChild(weg);
+      }
+    };
+    var zeichne = function () {
+      tageBox.innerHTML = ""; zeitenBox.innerHTML = "";
+      tage.forEach(function (t) {
+        var frei = t.zeiten.some(function (z) { return z.frei; });
+        var d = datum(t.tag);
+        var b = knopf("termin-tag", WT[d.getDay()] + "<b>" + d.getDate() + "</b>" + MON[d.getMonth()], frei, t === tagAktiv);
+        b.setAttribute("aria-label", WT_LANG[d.getDay()] + ", " + d.getDate() + ". " + MON[d.getMonth()] + (frei ? "" : ", ausgebucht"));
+        b.addEventListener("click", function () { tagAktiv = t; zeichne(); });
+        tageBox.appendChild(b);
+      });
+      if (!tagAktiv) return;
+      tagAktiv.zeiten.forEach(function (z) {
+        var wert = tagAktiv.tag + " " + z.zeit;
+        var b = knopf("termin-zeit", z.zeit, z.frei, feldTermin.value === wert);
+        if (!z.frei) b.setAttribute("aria-label", z.zeit + ", vergeben");
+        b.addEventListener("click", function () { setzeTermin(feldTermin.value === wert ? "" : wert); zeichne(); });
+        zeitenBox.appendChild(b);
+      });
+    };
+    ladeTermine = function () {
+      fetch("/termine.php", { headers: { Accept: "application/json" }, cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res.ok || !res.tage || !res.tage.length) { termin.hidden = true; setzeTermin(""); return; }
+          tage = res.tage;
+          // gewählten Tag/Termin behalten, wenn noch vorhanden und frei
+          var altTag = tagAktiv && tagAktiv.tag;
+          tagAktiv = tage.filter(function (t) { return t.tag === altTag; })[0]
+            || tage.filter(function (t) { return t.zeiten.some(function (z) { return z.frei; }); })[0] || null;
+          var w = feldTermin.value;
+          var nochFrei = w && tage.some(function (t) { return t.tag === w.slice(0, 10) && t.zeiten.some(function (z) { return z.frei && z.zeit === w.slice(11); }); });
+          if (!nochFrei) setzeTermin("");
+          termin.hidden = false;
+          zeichne();
+        })
+        .catch(function () { termin.hidden = true; setzeTermin(""); });
+    };
+    ladeTermine();
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var btn = form.querySelector("button[type=submit]");
@@ -478,7 +555,9 @@
     fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
       .then(function (r) { return r.json(); })
       .then(function (res) {
-        status.textContent = res.ok ? "Danke! Die Nachricht ist angekommen." : (res.message || "Senden hat nicht geklappt.");
+        status.textContent = res.ok
+          ? (res.termin ? "Danke! Dein Termin ist reserviert: " + res.termin + ". Du bekommst eine Bestätigung per E-Mail." : "Danke! Die Nachricht ist angekommen.")
+          : (res.message || "Senden hat nicht geklappt.");
         if (res.ok) {
           form.reset();
           form.querySelector("[name=dienstleistung]").value = "";
@@ -486,6 +565,7 @@
           var box = form.querySelector(".form-choice");
           if (box) box.hidden = true;
         }
+        if (res.ok || res.vergeben) ladeTermine();
       })
       .catch(function () { status.textContent = "Senden hat nicht geklappt. Bitte schreib direkt per E-Mail."; })
       .then(function () { btn.disabled = false; });

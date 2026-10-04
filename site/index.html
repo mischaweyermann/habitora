@@ -280,7 +280,14 @@
         <div class="v3-contact-text">
           <span class="v3-eyebrow">Kontakt</span>
           <h2>Lass uns über deinen Raum reden.</h2>
-          <p>Platzhalter-Kontaktdaten:<br>info@habitora.ch<br>079 000 00 00</p>
+          <p>Ruf an, schreib uns oder wähl direkt einen Termin für ein kostenloses Erstgespräch.</p>
+          <p class="v3-kontaktdaten"><a href="tel:+41797646585">079 764 65 85</a><br><a href="mailto:hallo@habitora.ch">hallo@habitora.ch</a></p>
+          <h3 class="v3-zeiten-titel">Öffnungszeiten</h3>
+          <dl class="v3-zeiten">
+            <dt>Montag</dt><dd>13:00–18:00</dd>
+            <dt>Freitag</dt><dd>09:00–12:00<br>13:00–18:00</dd>
+          </dl>
+          <p class="v3-zeiten-rest">Dienstag bis Donnerstag und am Wochenende geschlossen.</p>
         </div>
       <form class="form" id="kontaktformular" action="/kontakt.php" method="post">
         <div class="form-choice" hidden>
@@ -292,7 +299,15 @@
           <div><label for="f-mail">E-Mail</label><input id="f-mail" name="email" type="email" required maxlength="160" autocomplete="email"></div>
         </div>
         <div><label for="f-tel">Telefon <span class="optional">(freiwillig)</span></label><input id="f-tel" name="telefon" type="tel" maxlength="40" autocomplete="tel"></div>
-        <div><label for="f-msg">Nachricht</label><textarea id="f-msg" name="nachricht" required maxlength="5000"></textarea></div>
+        <fieldset class="termin" data-termin hidden>
+          <legend>Termin für ein Erstgespräch <span class="optional">(freiwillig)</span></legend>
+          <p class="termin-hinweis">Kostenlos, rund 1 Stunde, per Telefon oder vor Ort. Graue Zeiten sind schon vergeben.</p>
+          <div class="termin-tage" role="group" aria-label="Tag wählen"></div>
+          <div class="termin-zeiten" role="group" aria-label="Uhrzeit wählen"></div>
+          <p class="termin-auswahl" aria-live="polite"></p>
+          <input type="hidden" name="termin" value="">
+        </fieldset>
+        <div><label for="f-msg">Nachricht <span class="optional" data-msg-optional hidden>(freiwillig)</span></label><textarea id="f-msg" name="nachricht" required maxlength="5000"></textarea></div>
         <input type="hidden" name="dienstleistung" value="">
         <input type="hidden" name="fragebogen" value="">
         <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
