@@ -520,3 +520,8 @@
 .termin-tag:focus-visible, .termin-zeit:focus-visible { outline: 2px solid var(--clay); outline-offset: 2px; }
 .termin-auswahl { margin: 0; font-size: 14px; color: var(--sage); min-height: 1.3em; }
 .termin-auswahl button { font: inherit; background: none; border: 0; padding: 0; margin-left: 6px; color: var(--clay); text-decoration: underline; cursor: pointer; }
+/* Handy: keine Pfeile, die Tage werden mit dem Finger gewischt */
+@media (max-width: 760px) {
+  .termin-leiste { grid-template-columns: minmax(0, 1fr); }
+  .termin-pfeil { display: none; }
+}
