@@ -15,7 +15,6 @@
 // ---- Einstellungen -------------------------------------------------------
 // Öffnungszeiten je Wochentag (1 = Montag … 7 = Sonntag)
 $OEFFNUNGSZEITEN = [
-    1 => [['13:00', '18:00']],                       // Montag
     5 => [['09:00', '12:00'], ['13:00', '18:00']],   // Freitag
 ];
 $TERMIN_DAUER   = 60;   // Minuten pro Termin
