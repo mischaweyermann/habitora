@@ -277,7 +277,7 @@
   var ANGEBOTE = {
     check: {
       name: "Raum-Check",
-      text: "Ein Besuch vor Ort, eine ehrliche Einschätzung und drei konkrete Ideen, die du sofort selbst umsetzen kannst."
+      text: "Ein Besuch vor Ort, eine Ist-Aufnahme und passgenaue Ideen, die sofort umsetzbar sind."
     },
     konzept: {
       name: "Wohnkonzept",
