@@ -15,8 +15,8 @@
 // ---- Einstellungen -------------------------------------------------------
 // Öffnungszeiten je Wochentag (1 = Montag … 7 = Sonntag)
 $OEFFNUNGSZEITEN = [
-    1 => [['13:00', '18:00']],                       // Montag
     5 => [['09:00', '12:00'], ['13:00', '18:00']],   // Freitag
+    6 => [['09:00', '12:00'], ['13:00', '18:00']],   // Samstag
 ];
 $TERMIN_DAUER   = 60;   // Minuten pro Termin
 $VORLAUF        = 24;   // frühestens so viele Stunden ab jetzt buchbar
