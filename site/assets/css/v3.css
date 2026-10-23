@@ -532,3 +532,7 @@
   .termin-leiste { grid-template-columns: minmax(0, 1fr); }
   .termin-pfeil { display: none; }
 }
+
+/* Hinweis auf den Datenschutz unter dem Kontaktformular */
+.form-hinweis { font-size: 14px; line-height: 20px; color: var(--ink-soft); margin: 0; }
+.form-hinweis a { color: inherit; text-decoration: underline; }
