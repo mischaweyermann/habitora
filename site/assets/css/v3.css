@@ -280,6 +280,7 @@
 .v3-about .v3-eyebrow { color: var(--on-dark-soft); }
 .v3-about h2 { color: #fff; font-size: clamp(2rem, 4.4vw, 3.25rem); line-height: 1.05; margin-top: 12px; }
 .v3-about p { color: var(--on-dark-soft); font-size: 17px; line-height: 1.45; margin: 0 0 24px; }
+.v3-about .v3-about-sub { color: #fff; font-family: var(--display); font-weight: 400; font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.35; margin: 20px 0 0; max-width: 26ch; }
 .v3-pills { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .v3-pills li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: var(--linen); font-size: 13px; color: var(--sage); }
 .v3-pills-lg li { padding: 12px 20px; font-size: 14px; }
