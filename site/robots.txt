@@ -1,5 +1,6 @@
-# Testphase: Suchmaschinen aussperren. Beim Livegang ersetzen durch:
-# User-agent: *
-# Allow: /
 User-agent: *
-Disallow: /
+Disallow: /kontakt.php
+Disallow: /termine.php
+Disallow: /daten/
+
+Sitemap: https://habitora.ch/sitemap.xml
